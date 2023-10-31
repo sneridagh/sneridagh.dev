@@ -1,0 +1,7 @@
+---
+project_folders:
+  # Path to store sneridagh.dev postgres data
+  - path: "/srv/sneridagh-dev/data"
+    owner: 999
+    group: 999
+    mode: "0750"

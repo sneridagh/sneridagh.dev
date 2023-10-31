@@ -1,0 +1,19 @@
+{
+  "portal": [
+    {
+      "email": "sneridagh@gmail.com",
+      "properties": {
+        "fullname": "sneridagh.dev",
+        "location": "World"
+      },
+      "groups": [
+      ],
+      "roles": [
+        "Member"
+      ],
+      "username": "sneridagh-dev"
+    }
+  ],
+    "team": [
+  ]
+}

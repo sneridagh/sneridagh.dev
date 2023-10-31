@@ -19,18 +19,18 @@ services:
         - traefik.enable=true
         - traefik.docker.network=nw-internal
         - traefik.constraint-label=public
-        #- traefik.http.services.traefik-public.loadbalancer.server.port=8000
+        - traefik.http.services.traefik-public.loadbalancer.server.port=8000
         ## Basic Authentication
         ### Note: all dollar signs in the hash need to be doubled for escaping.
         ### To create user:password pair, it's possible to use this command:
         ### echo $(htpasswd -nb user password) | sed -e s/\\$/\\$\\$/g
         ### Defaults to admin:admin
-        #- traefik.http.middlewares.admin-auth.basicauth.users=admin:$$apr1$$uZPT5Fgu$$AmlIdamxT5ipBvPlsdfD70
-        #- traefik.http.routers.traefik-public-https.rule=Host(`traefik-sneridagh.dev`)
-        #- traefik.http.routers.traefik-public-https.entrypoints=https
-        #- traefik.http.routers.traefik-public-https.tls=true
-        #- traefik.http.routers.traefik-public-https.service=api@internal
-        #- traefik.http.routers.traefik-public-https.middlewares=admin-auth
+        # - traefik.http.middlewares.admin-auth.basicauth.users=admin:$$apr1$$uZPT5Fgu$$AmlIdamxT5ipBvPlsdfD70
+        # - traefik.http.routers.traefik-public-https.rule=Host(`traefik-sneridagh.dev`)
+        # - traefik.http.routers.traefik-public-https.entrypoints=https
+        # - traefik.http.routers.traefik-public-https.tls=true
+        # - traefik.http.routers.traefik-public-https.service=api@internal
+        # - traefik.http.routers.traefik-public-https.middlewares=admin-auth
 
         # GENERIC MIDDLEWARES
         - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
@@ -121,7 +121,7 @@ services:
         # Middlewares
         ## VHM rewrite /++api++/
         - "traefik.http.middlewares.mw-backend-vhm-api.replacepathregex.regex=^/\\+\\+api\\+\\+($$|/.*)"
-        - "traefik.http.middlewares.mw-backend-vhm-api.replacepathregex.replacement=/VirtualHostBase/https/sneridagh.dev/Plone/++api++/VirtualHostRoot$$1"
+        - "traefik.http.middlewares.mw-backend-vhm-api.replacepathregex.replacement=/VirtualHostBase/https/sneridagh.dev:443/Plone/++api++/VirtualHostRoot$$1"
 
         ## VHM rewrite /api/ (Plone NextJS)
         - "traefik.http.middlewares.mw-backend-vhm-api-alt.replacepathregex.regex=^/api($$|/.*)"
@@ -130,7 +130,7 @@ services:
 
         ## VHM rewrite /ClassicUI/
         - "traefik.http.middlewares.mw-backend-vhm-classic.replacepathregex.regex=^/ClassicUI($$|/.*)"
-        - "traefik.http.middlewares.mw-backend-vhm-classic.replacepathregex.replacement=/VirtualHostBase/https/sneridagh.dev/Plone/VirtualHostRoot/_vh_ClassicUI$$1"
+        - "traefik.http.middlewares.mw-backend-vhm-classic.replacepathregex.replacement=/VirtualHostBase/https/sneridagh.dev:443/Plone/VirtualHostRoot/_vh_ClassicUI$$1"
 
         ## Basic Authentication
         ### Note: all dollar signs in the hash need to be doubled for escaping.

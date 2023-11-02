@@ -1,7 +1,7 @@
-import 'prismjs/components/prism-jsx';
-import 'prismjs/components/prism-tsx';
+// import 'prismjs/components/prism-jsx';
+// import 'prismjs/components/prism-tsx';
 
-import { languages } from '@plonegovbr/volto-code-block';
+// import { languages } from '@plonegovbr/volto-code-block';
 import './one.scss';
 
 const applyConfig = (config) => {
@@ -12,13 +12,13 @@ const applyConfig = (config) => {
     defaultLanguage: 'en',
   };
 
-  config.settings.codeBlock = {
-    languages: {
-      ...config.settings.codeBlock.languages,
-      jsx: { label: 'jsx', language: languages.jsx },
-      tsx: { label: 'tsx', language: languages.tsx },
-    },
-  };
+  // config.settings.codeBlock = {
+  //   languages: {
+  //     ...config.settings.codeBlock.languages,
+  //     jsx: { label: 'jsx', language: languages.jsx },
+  //     tsx: { label: 'tsx', language: languages.tsx },
+  //   },
+  // };
 
   return config;
 };

@@ -11,7 +11,7 @@ const applyConfig = (config) => {
     supportedLanguages: ['en'],
     defaultLanguage: 'en',
   };
-
+  // Trigger a change
   // config.settings.codeBlock = {
   //   languages: {
   //     ...config.settings.codeBlock.languages,

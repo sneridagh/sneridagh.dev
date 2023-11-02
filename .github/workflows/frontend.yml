@@ -10,7 +10,7 @@ on:
 env:
   IMAGE_NAME_PREFIX: ghcr.io/sneridagh/sneridagh-dev
   IMAGE_NAME_SUFFIX: frontend
-  NODE_VERSION: 18.x
+  NODE_VERSION: 20.x
 
 defaults:
   run:
@@ -67,7 +67,7 @@ jobs:
           echo '| Prettier | ${{ steps.prettier.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY
           echo '| ESLint | ${{ steps.eslint.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY
           echo '| i18n | ${{ steps.i18n.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY
-          echo '| Unit Tests | ${{ steps.unit.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY 
+          echo '| Unit Tests | ${{ steps.unit.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY
 
 
   release:

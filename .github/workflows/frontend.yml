@@ -71,7 +71,7 @@ jobs:
 
 
   release:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs:
       - code-analysis
     permissions:
@@ -114,7 +114,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          platforms: linux/amd64
+          platforms: linux/arm64
           context: frontend/
           file: frontend/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}

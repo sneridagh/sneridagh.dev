@@ -103,7 +103,7 @@ jobs:
           pytest --disable-warnings src/sneridagh_dev/tests
 
   release:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs:
       - black
       - flake8

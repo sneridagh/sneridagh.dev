@@ -31,6 +31,7 @@
   "addons": [
     "volto-sneridagh-dev"
   ],
+  "theme": "volto-sneridagh-dev",
   "jest": {
     "modulePathIgnorePatterns": [
       "api"
@@ -167,6 +168,5 @@
   "resolutions": {
     "react-error-overlay": "6.0.9"
   },
-  "packageManager": "yarn@3.2.3",
-  "theme": "volto-sneridagh-dev"
+  "packageManager": "yarn@3.2.3"
 }

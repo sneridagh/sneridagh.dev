@@ -67,8 +67,8 @@ services:
       - nw-internal
 
   frontend:
-    # image: ghcr.io/sneridagh/sneridagh-dev-frontend:${STACK_PARAM:-latest}
-    image: plone/plone-frontend:17.2.0
+    image: ghcr.io/sneridagh/sneridagh-dev-frontend:${STACK_PARAM:-latest}
+    # image: plone/plone-frontend:17.2.0
     environment:
       RAZZLE_INTERNAL_API_PATH: http://backend:8080/Plone
     depends_on:
@@ -97,8 +97,8 @@ services:
         - traefik.http.routers.frontend.middlewares=gzip
 
   backend:
-    # image: ghcr.io/sneridagh/sneridagh-dev-backend:${STACK_PARAM:-latest}
-    image: plone/plone-backend:6
+    image: ghcr.io/sneridagh/sneridagh-dev-backend:${STACK_PARAM:-latest}
+    # image: plone/plone-backend:6
     environment:
       RELSTORAGE_DSN: "dbname='${DB_NAME:-plone}' user='${DB_USER:-plone}' host='${DB_HOST:-db}' password='${DB_PASSWORD:-rHPsyjqvWSEG}' port='${DB_PORT:-5432}'"
     depends_on:

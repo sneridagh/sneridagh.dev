@@ -2,7 +2,7 @@
   "name": "sneridagh.dev",
   "description": "A Volto-powered Plone frontend",
   "license": "MIT",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "start": "razzle start",
     "postinstall": "make omelette && make patches",

@@ -1,6 +1,6 @@
-from sneridagh_dev import _
 from plone.dexterity.content import Container
 from plone.supermodel.model import Schema
+from sneridagh_dev import _
 from zope import schema
 from zope.interface import implementer
 

@@ -31,7 +31,7 @@
   "addons": [
     "volto-sneridagh-dev"
   ],
-  "theme": "volto-sneridagh-dev",
+  "theme": "@kitconcept/volto-light-theme",
   "jest": {
     "modulePathIgnorePatterns": [
       "api"

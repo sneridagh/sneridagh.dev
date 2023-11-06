@@ -1,5 +1,5 @@
 // SemanticUI-free pre-@plone/components
-import { UniversalLink, Logo } from '@plone/volto/components';
+import { Logo } from '@plone/volto/components';
 import Container from '@kitconcept/volto-light-theme/components/Atoms/Container/Container';
 
 const Footer = () => {

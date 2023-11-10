@@ -1,0 +1,75 @@
+---
+version: '3.8'
+services:
+
+  matomo:
+    image: matomo:4.15
+    depends_on:
+      - db
+    networks:
+      - nw-stats-prod
+      - public
+    volumes:
+      - vol-matomo-root:/var/www/html
+    environment:
+      MATOMO_DATABASE_HOST: "db"
+      MATOMO_DATABASE_ADAPTER: "mysql"
+      MATOMO_DATABASE_TABLES_PREFIX: "${MATOMO_DATABASE_TABLES_PREFIX:-matomo_}"
+      MATOMO_DATABASE_USERNAME: "${MYSQL_USER:-plone}"
+      MATOMO_DATABASE_PASSWORD: "${MYSQL_PASSWORD:-plone}"
+      MATOMO_DATABASE_DBNAME: "${MYSQL_DATABASE:-matomo}"
+      DEBUG: "1"
+
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        order: start-first
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=public
+        - traefik.constraint-label=public
+        # Service
+        - traefik.http.services.svc-stats-matomo-prod.loadbalancer.server.port=80
+        # Router: Main
+        - traefik.http.routers.rt-stats-prod.rule=Host(`analytics.sneridagh.dev`)
+        - traefik.http.routers.rt-stats-prod.entrypoints=https
+        - traefik.http.routers.rt-stats-prod.tls=true
+        - traefik.http.routers.rt-stats-prod.tls.certresolver=le
+        - traefik.http.routers.rt-stats-prod.service=svc-stats-matomo-prod
+        - traefik.http.routers.rt-stats-prod.middlewares=gzip
+
+  db:
+    image: mariadb:10.3
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+    networks:
+      - nw-stats-prod
+    volumes:
+      - vol-matomo-db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD:-plone}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE:-matomo}"
+      MYSQL_USER: "${MYSQL_USER:-plone}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD:-plone}"
+
+volumes:
+  vol-matomo-db:
+    driver_opts:
+      type: none
+      device: /srv/matomo/data
+      o: bind
+  vol-matomo-root:
+    driver_opts:
+      type: none
+      device: /srv/matomo/etc
+      o: bind
+
+networks:
+  public:
+    external: true
+  nw-stats-prod:
+    internal: true
+    driver: overlay

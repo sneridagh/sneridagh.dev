@@ -5,3 +5,13 @@ project_folders:
     owner: 999
     group: 999
     mode: "0750"
+  # Path to store sneridagh.dev matomo data
+  - path: "/srv/matomo/data"
+    owner: 999
+    group: 999
+    mode: "0750"
+  # Path to store sneridagh.dev matomo etc
+  - path: "/srv/matomo/etc"
+    owner: 999
+    group: 999
+    mode: "0750"

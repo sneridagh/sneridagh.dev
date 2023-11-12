@@ -93,6 +93,16 @@ stack-deploy: ## Deploy stacks: $(STACK_NAME)
 	@echo "$(GREEN)==> Stack $(STACK_NAME): Deploy to context $(DEPLOY_ENV) $(RESET)"
 	${DOCKER_CMD_CONTEXT} stack deploy -c stacks/sneridagh.dev.yml $(STACK_NAME)
 
+.PHONY: stack-deploy-tools
+stack-deploy-tools: ## Deploy stacks: $(STACK_NAME)
+	@echo "$(GREEN)==> Stack $(STACK_NAME): Deploy to context $(DEPLOY_ENV) $(RESET)"
+	${DOCKER_CMD_CONTEXT} stack deploy -c stacks/matomo.yml $(STACK_NAME_TOOLS)
+
+.PHONY: stack-deploy-webserver
+stack-deploy-webserver: ## Deploy stacks: $(STACK_NAME)
+	@echo "$(GREEN)==> Stack $(STACK_NAME): Deploy to context $(DEPLOY_ENV) $(RESET)"
+	${DOCKER_CMD_CONTEXT} stack deploy -c stacks/webserver.yml $(STACK_NAME_WEBSERVER)
+
 .PHONY: stack-create-site
 stack-create-site: ## Create a new site stacks: $(STACK_NAME)
 	@echo "$(GREEN)==> Stack $(STACK_NAME): Create site in context $(DEPLOY_ENV) $(RESET)"
@@ -102,6 +112,11 @@ stack-create-site: ## Create a new site stacks: $(STACK_NAME)
 stack-status: ## Check status of stack
 	@echo "$(GREEN)==> Stack $(STACK_NAME): Status in context $(DEPLOY_ENV) $(RESET)"
 	${DOCKER_CMD_CONTEXT} stack ps -f "desired-state=running" $(STACK_NAME)
+
+.PHONY: stack-status-tools
+stack-status-tools: ## Check status of stack
+	@echo "$(GREEN)==> Stack $(STACK_NAME): Status in context $(DEPLOY_ENV) $(RESET)"
+	${DOCKER_CMD_CONTEXT} stack ps -f "desired-state=running" $(STACK_NAME_TOOLS)
 
 .PHONY: stack-logs-webserver
 stack-logs-webserver: ## Display webserver logs

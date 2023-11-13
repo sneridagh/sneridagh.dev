@@ -10,7 +10,7 @@ const applyConfig = (config) => {
     isMultilingual: false,
     supportedLanguages: ['en'],
     defaultLanguage: 'en',
-    matomoUrlBase: 'https://sneridagh.dev/',
+    matomoUrlBase: 'https://analytics.sneridagh.dev/',
   };
 
   // config.settings.codeBlock = {

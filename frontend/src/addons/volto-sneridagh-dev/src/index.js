@@ -11,6 +11,7 @@ const applyConfig = (config) => {
     supportedLanguages: ['en'],
     defaultLanguage: 'en',
     matomoUrlBase: 'https://analytics.sneridagh.dev/',
+    matomoSiteId: '1',
   };
 
   // config.settings.codeBlock = {

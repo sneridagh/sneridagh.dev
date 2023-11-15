@@ -20,7 +20,7 @@ services:
         order: start-first
       labels:
         - traefik.enable=true
-        - traefik.docker.network=nw-internal
+        - traefik.docker.network=sneridagh-dev_nw-internal
         - traefik.constraint-label=public
         # Service
         - traefik.http.services.svc-frontend.loadbalancer.server.port=3000
@@ -50,7 +50,7 @@ services:
         order: start-first
       labels:
         - traefik.enable=true
-        - traefik.docker.network=nw-internal
+        - traefik.docker.network=sneridagh-dev_nw-internal
         - traefik.constraint-label=public
         # Services
         - traefik.http.services.svc-backend.loadbalancer.server.port=8080

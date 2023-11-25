@@ -47,7 +47,7 @@
 
     - name: "Docker: Add Repository"
       ansible.builtin.apt_repository:
-        repo: "deb [arch=arm64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable"
+        repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable"
         state: present
         filename: 'docker'
   tags:

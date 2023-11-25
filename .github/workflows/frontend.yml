@@ -11,6 +11,7 @@ env:
   IMAGE_NAME_PREFIX: ghcr.io/sneridagh/sneridagh-dev
   IMAGE_NAME_SUFFIX: frontend
   NODE_VERSION: 20.x
+  VOLTO_VERSION: "17.3.0"
 
 defaults:
   run:
@@ -114,7 +115,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          platforms: linux/arm64
+          platforms: linux/amd64
           context: frontend/
           file: frontend/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}

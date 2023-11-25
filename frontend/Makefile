@@ -10,6 +10,8 @@ MAKEFLAGS+=--no-builtin-rules
 IMAGE_NAME=ghcr.io/sneridagh/sneridagh-dev-frontend
 IMAGE_TAG=latest
 
+VOLTO_VERSION = 17.3.0
+
 NODEBIN = ./node_modules/.bin
 
 # Add the following 'help' target to your Makefile
@@ -89,9 +91,13 @@ storybook: ## Generate Storybook
 
 .PHONY: build-image
 build-image:  ## Build Docker Image
-	@DOCKER_BUILDKIT=1 docker build . -t $(IMAGE_NAME):$(IMAGE_TAG) -f Dockerfile
+	@DOCKER_BUILDKIT=1 docker build . -t $(IMAGE_NAME):$(IMAGE_TAG) -f Dockerfile --build-arg VOLTO_VERSION=$(VOLTO_VERSION)
 
 # Acceptance tests
+.PHONY: build-image-acceptance
+build-image-acceptance: ## Build Acceptance Servers
+	@echo "Build acceptance frontend"
+	@docker build backend -t $(IMAGE_NAME):acceptance -f Dockerfile --build-arg VOLTO_VERSION=$(VOLTO_VERSION)
 
 .PHONY: test-acceptance
 test-acceptance: ## Start Core Cypress Acceptance Tests

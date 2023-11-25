@@ -101,6 +101,12 @@ make docker-info
 
 ### Stack Deployment
 
+Go to the server and add manually a public network scoped for all the cluster:
+
+```shell
+docker network create --driver overlay --opt com.docker.network.driver.mtu=1450 public
+```
+
 Deploy the stack defined in `devops/stacks/sneridagh.dev.yml` to the remote server with:
 
 ```shell

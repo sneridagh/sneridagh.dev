@@ -3178,9 +3178,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@kitconcept/volto-light-theme@npm:1.0.1":
-  version: 1.0.1
-  resolution: "@kitconcept/volto-light-theme@npm:1.0.1"
+"@kitconcept/volto-light-theme@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@kitconcept/volto-light-theme@npm:2.0.0"
   peerDependencies:
     "@eeacms/volto-accordion-block": ^10.4.0
     "@kitconcept/volto-button-block": ^2.3.1
@@ -3189,9 +3189,9 @@ __metadata:
     "@kitconcept/volto-highlight-block": ^3.0.0
     "@kitconcept/volto-introduction-block": ^1.0.0
     "@kitconcept/volto-separator-block": ^4.0.0
-    "@kitconcept/volto-slider-block": ^5.1.1
-    "@plone/volto": ^17.2.0
-  checksum: 054479e1efe8fafe777fe6735d9cf44c1ea424c0d86aace7251a2121f74fb9ef11c658d7dea04d913c75c48c4f226170f767ca98751f87ace434270c7ccbf7b2
+    "@kitconcept/volto-slider-block": 5.1.1
+    "@plone/volto": ^17.5.0
+  checksum: 17e7b80e89d3b328c606a0b9371bebbce899c078bff32c1e5b182cfbb0046b1232dae14e9792cd2c41446b1ecb339955bea9b8fe70a2051155d1e9e6b9832f9b
   languageName: node
   linkType: hard
 
@@ -27820,7 +27820,7 @@ __metadata:
     "@kitconcept/volto-heading-block": ^2.4.0
     "@kitconcept/volto-highlight-block": ^3.0.0
     "@kitconcept/volto-introduction-block": ^1.0.0
-    "@kitconcept/volto-light-theme": 1.0.1
+    "@kitconcept/volto-light-theme": 2.0.0
     "@kitconcept/volto-separator-block": ^4.0.0
     "@kitconcept/volto-slider-block": ^5.2.0
     "@plone/scripts": ^3.0.0

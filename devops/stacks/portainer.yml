@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  agent:
+    image: portainer/agent:2.19.1
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+    networks:
+      - agent_network
+    deploy:
+      mode: global
+
+  portainer:
+    image: portainer/portainer-ce:2.19.1
+    command: -H tcp://tasks.agent:9001 --tlsskipverify
+    ports:
+      - "9443:9443"
+    volumes:
+      - portainer_data:/data
+    networks:
+      - agent_network
+      - public
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=public
+        - traefik.constraint-label=public
+        - traefik.http.services.portainer-frontend.loadbalancer.server.port=9000
+        - traefik.http.routers.portainer-frontend.rule=Host(`portainer.sneridagh.dev`)
+        - traefik.http.routers.portainer-frontend.entrypoints=https
+        - traefik.http.routers.portainer-frontend.service=portainer-frontend
+        - traefik.http.routers.portainer-frontend.tls=true
+        - traefik.http.routers.portainer-frontend.tls.certresolver=le
+
+networks:
+  public:
+    external: true
+    name: public
+
+  agent_network:
+    driver: overlay
+    attachable: true
+    driver_opts:
+      com.docker.network.driver.mtu: 1450
+
+volumes:
+  portainer_data:

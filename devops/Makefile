@@ -97,6 +97,7 @@ stack-deploy: ## Deploy stacks: $(STACK_NAME)
 stack-deploy-tools: ## Deploy stacks: $(STACK_NAME)
 	@echo "$(GREEN)==> Stack $(STACK_NAME): Deploy to context $(DEPLOY_ENV) $(RESET)"
 	${DOCKER_CMD_CONTEXT} stack deploy -c stacks/matomo.yml $(STACK_NAME_TOOLS)
+	${DOCKER_CMD_CONTEXT} stack deploy -c stacks/portainer.yml $(STACK_NAME_TOOLS)
 
 .PHONY: stack-deploy-webserver
 stack-deploy-webserver: ## Deploy stacks: $(STACK_NAME)

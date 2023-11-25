@@ -70,6 +70,8 @@ volumes:
 networks:
   public:
     external: true
+    name: public
+
   nw-stats-prod:
     internal: true
     driver: overlay

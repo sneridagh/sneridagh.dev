@@ -62,6 +62,7 @@ setup(
             "collective.MockMailHost",
             "collective.exportimport",
             "kitconcept.seo",
+            "collective.blog",
         ],
     },
     entry_points="""

@@ -12,9 +12,9 @@ EOT
 
 FROM plone/frontend-prod-config:${VOLTO_VERSION}
 
-LABEL maintainer="kitconcept GmbH <server@kitconcept.com>" \
-      org.label-schema.name="intra.kitconcept.com-frontend" \
-      org.label-schema.description="kitconcept Intranet frontend image." \
-      org.label-schema.vendor="kitconcept GmbH"
+LABEL maintainer="Victor Fernandez de Alba <sneridagh@gmail.com>" \
+      org.label-schema.name="sneridagh-dev-frontend" \
+      org.label-schema.description="sneridagh.dev frontend image" \
+      org.label-schema.vendor="Victor Fernandez de Alba"
 
 COPY --from=builder /app/ /app/

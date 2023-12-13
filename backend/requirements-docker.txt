@@ -1,2 +1,2 @@
 -c constraints.txt
-collective.blog>=1.0.0a4
+collective.blog>=1.0.0a5

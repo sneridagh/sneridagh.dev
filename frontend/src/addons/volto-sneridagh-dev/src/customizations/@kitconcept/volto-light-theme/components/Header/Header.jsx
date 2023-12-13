@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import Container from '@kitconcept/volto-light-theme/components/Atoms/Container/Container';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import MobileNavigation from '@kitconcept/volto-light-theme/components/MobileNavigation/MobileNavigation';
 
 import {
   Anontools,
@@ -26,7 +27,8 @@ const Header = (props) => {
               <Logo />
             </div>
             <Navigation pathname={pathname} />
-            <div className="search-wrapper">
+            <MobileNavigation pathname={pathname} />
+            <div className="search-wrapper navigation-desktop">
               <div className="search">
                 <SearchWidget />
               </div>

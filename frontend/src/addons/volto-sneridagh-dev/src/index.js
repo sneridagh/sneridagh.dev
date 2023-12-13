@@ -3,7 +3,7 @@
 import LogoImage from './sneridaghLogo.png';
 
 // import { languages } from '@plonegovbr/volto-code-block';
-import './one.scss';
+// import './one.scss';
 
 const applyConfig = (config) => {
   config.settings = {

@@ -3,7 +3,7 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     >
 
-  <genericsetup:upgradeSteps
+  <!-- <genericsetup:upgradeSteps
       profile="sneridagh_dev:default"
       source="20231031001"
       destination="2"
@@ -12,6 +12,6 @@
         title="Add BlogPost content types"
         import_steps="typeinfo"
         />
-  </genericsetup:upgradeSteps>
+  </genericsetup:upgradeSteps> -->
 
 </configure>

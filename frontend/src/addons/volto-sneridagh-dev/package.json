@@ -22,7 +22,6 @@
     "@kitconcept/volto-introduction-block",
     "@kitconcept/volto-separator-block",
     "@kitconcept/volto-slider-block",
-    "@plonegovbr/volto-code-block",
     "@kitconcept/volto-light-theme"
   ],
   "scripts": {
@@ -64,9 +63,9 @@
     "@kitconcept/volto-heading-block": "^2.4.0",
     "@kitconcept/volto-highlight-block": "^3.0.0",
     "@kitconcept/volto-introduction-block": "^1.0.0",
-    "@kitconcept/volto-light-theme": "2.0.0",
+    "@kitconcept/volto-light-theme": "2.1.0",
     "@kitconcept/volto-separator-block": "^4.0.0",
-    "@kitconcept/volto-slider-block": "^5.2.0",
+    "@kitconcept/volto-slider-block": "^6.0.0-alpha.0",
     "@plonegovbr/volto-code-block": "2.1.0"
   }
 }

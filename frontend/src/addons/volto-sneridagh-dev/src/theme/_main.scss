@@ -1,6 +1,9 @@
+@import 'typography';
+
 :root {
   // --narrow-container-width: 1100px;
   // --default-container-width: 1100px;
+  --custom-main-font: 'metropolis';
 }
 
 .logo-nav-wrapper .logo img {

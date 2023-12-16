@@ -17,3 +17,29 @@
 #footer .footer .footer-branding a {
   font-size: 14px;
 }
+
+#page-document .blocks-group-wrapper {
+  & > .documentFirstHeading {
+    @include default-container-width();
+    @include adjustMarginsToContainer($default-container-width);
+  }
+}
+
+.documentFirstHeading {
+  border: none;
+  @include vertical-space-h1();
+
+  h1 {
+    @include page-title();
+    @include word-break();
+  }
+
+  span {
+    border: none;
+    @include page-title();
+  }
+
+  &::before {
+    display: none;
+  }
+}

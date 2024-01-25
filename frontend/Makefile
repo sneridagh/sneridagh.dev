@@ -10,7 +10,7 @@ MAKEFLAGS+=--no-builtin-rules
 IMAGE_NAME=ghcr.io/sneridagh/sneridagh-dev-frontend
 IMAGE_TAG=latest
 
-VOLTO_VERSION = 17.3.0
+VOLTO_VERSION = 18.0.0-alpha.8
 
 NODEBIN = ./node_modules/.bin
 

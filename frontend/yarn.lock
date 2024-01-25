@@ -3608,6 +3608,30 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@plone/scripts@npm:^3.3.1":
+  version: 3.3.1
+  resolution: "@plone/scripts@npm:3.3.1"
+  dependencies:
+    "@babel/core": ^7.0.0
+    babel-plugin-react-intl: 5.1.17
+    babel-preset-razzle: 4.2.17
+    chalk: 4
+    commander: 8.2.0
+    comment-json: ^4.2.3
+    fs-extra: 10.1.0
+    git-url-parse: ^13.1.0
+    glob: 7.1.6
+    lodash: 4.17.21
+    mrs-developer: ^2.1.1
+    pofile: 1.0.10
+  bin:
+    addon: addon/index.js
+    changelogupdater: changelogupdater.cjs
+    i18n: i18n.cjs
+  checksum: ca61990664378456f3ea97f3cbd00ed9c805990edc6a3d4d452e6a858ff21297e24bede4706307136506399898fdbb8934f8af55de9848a1adb9235295cda8db
+  languageName: node
+  linkType: hard
+
 "@plone/volto-slate@npm:18.0.0-alpha.5":
   version: 18.0.0-alpha.5
   resolution: "@plone/volto-slate@npm:18.0.0-alpha.5"
@@ -18821,6 +18845,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mrs-developer@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "mrs-developer@npm:2.1.1"
+  dependencies:
+    async: ^3.2.4
+    chalk: ^2.4.2
+    simple-git: ^3.3.0
+  bin:
+    missdev: src/command.js
+  checksum: 3529adc18d4beff3cbb6974043b7f10bc3281d1173119f02b82d990875a4a70760f4c3c2f3b22c4c4ff016413dd30975fbc1cf5fb76f3feb031d859d0f436136
+  languageName: node
+  linkType: hard
+
 "ms@npm:2.0.0":
   version: 2.0.0
   resolution: "ms@npm:2.0.0"
@@ -24493,7 +24530,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "sneridagh.dev@workspace:."
   dependencies:
-    "@plone/scripts": ^3.0.0
+    "@plone/scripts": ^3.3.1
     "@plone/volto": 18.0.0-alpha.5
     "@storybook/addon-actions": ^6.3.0
     "@storybook/addon-controls": 6.3.0

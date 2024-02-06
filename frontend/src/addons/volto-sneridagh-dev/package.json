@@ -35,6 +35,7 @@
   "devDependencies": {
     "@babel/eslint-parser": "7.22.15",
     "@plone/scripts": "^3.3.2",
+    "@plone/types": "1.0.0-alpha.3",
     "eslint": "8.49.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-config-react-app": "7.0.1",

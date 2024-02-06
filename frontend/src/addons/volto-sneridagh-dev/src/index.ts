@@ -1,4 +1,4 @@
-import { ConfigData } from '@plone/types';
+import type { ConfigData } from '@plone/types';
 import LogoImage from './sneridaghLogo.png';
 
 const applyConfig = (config: ConfigData) => {
@@ -21,7 +21,8 @@ const applyConfig = (config: ConfigData) => {
   config.blocks.blocksConfig.leadimage.restricted = ({ properties }) =>
     !(
       properties.hasOwnProperty('image') ||
-      properties.hasOwnProperty('preview_image')
+      properties.hasOwnProperty('preview_image') ||
+      properties.hasOwnProperty('preview_image_link')
     );
 
   return config;

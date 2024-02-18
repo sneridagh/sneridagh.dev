@@ -28,4 +28,12 @@
   <include package=".services" />
   <include package=".subscribers" />
 
+  <browser:page
+      allowed_attributes="scale tag"
+      class="plone.namedfile.scaling.ImageScaling"
+      for="plone.app.layout.navigation.interfaces.INavigationRoot"
+      name="images"
+      permission="zope2.View"
+  />
+
 </configure>

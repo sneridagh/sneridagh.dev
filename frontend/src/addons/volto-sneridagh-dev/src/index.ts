@@ -13,6 +13,8 @@ const applyConfig = (config: ConfigData) => {
 
   config.settings.enableFatMenu = false;
 
+  config.settings.slate.toolbarButtons.push('code');
+
   config.registerComponent({
     name: 'LogoImage',
     component: LogoImage,

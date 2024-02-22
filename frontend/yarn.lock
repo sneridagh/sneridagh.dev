@@ -3160,9 +3160,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@plone/registry@npm:1.2.2":
-  version: 1.2.2
-  resolution: "@plone/registry@npm:1.2.2"
+"@plone/registry@npm:1.3.1":
+  version: 1.3.1
+  resolution: "@plone/registry@npm:1.3.1"
   dependencies:
     crypto-random-string: 3.2.0
     debug: 4.3.2
@@ -3174,7 +3174,7 @@ __metadata:
   peerDependenciesMeta:
     react-dom:
       optional: true
-  checksum: bb48291af3d9d4327bd35150f2de80100abd24b0beb9b7f3c6024b6450ce3e7e202a2a49c5756156e37ad478ef9d7c6ac7841c62cae17cb6c8b062d204ed970e
+  checksum: bbd5d869e0cc50974e2439e659922ac20deefa0a1e1d377dab8fa8af5a5f52553fc2a549b2cbc2d019b97ec75e864330b81a505506a46dab9a37a588635fa4ef
   languageName: node
   linkType: hard
 
@@ -3217,9 +3217,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@plone/volto-slate@npm:18.0.0-alpha.6":
-  version: 18.0.0-alpha.6
-  resolution: "@plone/volto-slate@npm:18.0.0-alpha.6"
+"@plone/volto-slate@npm:18.0.0-alpha.7":
+  version: 18.0.0-alpha.7
+  resolution: "@plone/volto-slate@npm:18.0.0-alpha.7"
   dependencies:
     image-extensions: 1.1.0
     is-url: 1.2.4
@@ -3232,13 +3232,13 @@ __metadata:
     slate-hyperscript: 0.100.0
     slate-react: 0.98.4
     weak-key: ^1.0.2
-  checksum: d0ad1bb8c811b7424515aa371d2c5148d0051b4755bf9723ae1d263a3b8649da33deafe73f4461c7cf6b84a6caaa12d29e050554be737019b4f8aece60ef6d16
+  checksum: d53f1d1fd6ad3c73b0d8cee4a391db36d9d360cc9415e5e3a1f6e549ef637fec291886a0e0011667d107476c9b6d4b6383d00c2c32aaebc62f46af90b36fadbe
   languageName: node
   linkType: hard
 
-"@plone/volto@npm:18.0.0-alpha.10":
-  version: 18.0.0-alpha.10
-  resolution: "@plone/volto@npm:18.0.0-alpha.10"
+"@plone/volto@npm:18.0.0-alpha.13":
+  version: 18.0.0-alpha.13
+  resolution: "@plone/volto@npm:18.0.0-alpha.13"
   dependencies:
     "@babel/core": ^7.0.0
     "@babel/eslint-parser": 7.22.15
@@ -3254,9 +3254,9 @@ __metadata:
     "@loadable/component": 5.14.1
     "@loadable/server": 5.14.0
     "@loadable/webpack-plugin": 5.15.2
-    "@plone/registry": 1.2.2
+    "@plone/registry": 1.3.1
     "@plone/scripts": 3.3.2
-    "@plone/volto-slate": 18.0.0-alpha.6
+    "@plone/volto-slate": 18.0.0-alpha.7
     autoprefixer: 10.4.8
     axe-core: 4.4.2
     babel-plugin-add-module-exports: 0.2.1
@@ -3413,7 +3413,7 @@ __metadata:
     webpack-node-externals: 3.0.0
     xmlrpc: 1.3.2
     yarnhook: 0.5.1
-  checksum: 7122cdb06af0c02ef845e6e0316747ebdc820c42554d8a503d8d04ec017abe9dd3f07659108d30b47feb09e6f442f79023a4de626e34927658296f433394f879
+  checksum: cd8eccd0d33917aa9a96dda56ff5a44af459e3a804dd396da12722ae80ff6a00dabb767076f668012e0e206497cf067ed0febe7bb67bd6785b45f6d1d3119003
   languageName: node
   linkType: hard
 
@@ -23529,7 +23529,7 @@ __metadata:
   resolution: "sneridagh.dev@workspace:."
   dependencies:
     "@plone/scripts": ^3.3.2
-    "@plone/volto": 18.0.0-alpha.10
+    "@plone/volto": 18.0.0-alpha.13
     "@storybook/addon-actions": ^6.3.0
     "@storybook/addon-controls": 6.3.0
     "@storybook/addon-essentials": ^6.3.0

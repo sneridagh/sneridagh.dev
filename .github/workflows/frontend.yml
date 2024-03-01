@@ -11,7 +11,7 @@ env:
   IMAGE_NAME_PREFIX: ghcr.io/sneridagh/sneridagh-dev
   IMAGE_NAME_SUFFIX: frontend
   NODE_VERSION: 20.x
-  VOLTO_VERSION: "18.0.0-alpha.13"
+  VOLTO_VERSION: "18.0.0-alpha.15"
 
 defaults:
   run:

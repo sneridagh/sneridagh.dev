@@ -1,7 +1,7 @@
-import type { ConfigData } from '@plone/types';
+import type { ConfigType } from '@plone/registry';
 import LogoImage from './sneridaghLogo.png';
 
-const applyConfig = (config: ConfigData) => {
+const applyConfig = (config: ConfigType) => {
   config.settings = {
     ...config.settings,
     isMultilingual: false,

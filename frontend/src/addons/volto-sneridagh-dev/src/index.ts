@@ -20,6 +20,8 @@ const applyConfig = (config: ConfigType) => {
     component: LogoImage,
   });
 
+  // config.registerSlotComponent({slot: 'aboveContent', component: 'LogoImage'});
+
   config.blocks.blocksConfig.leadimage.restricted = ({ properties }) =>
     !(
       properties.hasOwnProperty('image') ||

@@ -1,5 +1,17 @@
 import type { ConfigType } from '@plone/registry';
+import type { PreviewImage } from '@plone/types/src/content/common';
+import { ContentTypeCondition } from '@plone/volto/helpers';
+import { LeadImageSlot } from './components/LeadImageSlot/LeadImageSlot';
 import LogoImage from './sneridaghLogo.png';
+
+// We extend the Content type to include the new fields from the ICTA behavior
+declare module '@plone/types' {
+  export interface Content {
+    image: PreviewImage;
+    preview_image_link: PreviewImage;
+    preview_caption_link: string;
+  }
+}
 
 const applyConfig = (config: ConfigType) => {
   config.settings = {
@@ -20,7 +32,12 @@ const applyConfig = (config: ConfigType) => {
     component: LogoImage,
   });
 
-  // config.registerSlotComponent({slot: 'aboveContent', component: 'LogoImage'});
+  config.registerSlotComponent({
+    slot: 'aboveContent',
+    name: 'LeadImageSlot',
+    component: LeadImageSlot,
+    predicates: [ContentTypeCondition(['Post'])],
+  });
 
   config.blocks.blocksConfig.leadimage.restricted = ({ properties }) =>
     !(

@@ -1,52 +1,58 @@
-import { UniversalLink } from '@plone/volto/components';
-import cx from 'classnames';
-import config from '@plone/volto/registry';
+import { useEffect, useState } from 'react';
+import { Image } from '@plone/volto/components';
+import { useDispatch, useSelector } from 'react-redux';
+import type { Content } from '@plone/types';
+import { setSidebarTab, setMetadataFocus } from '@plone/volto/actions';
+import { isEmpty } from 'lodash';
+import Container from '@kitconcept/volto-light-theme/components/Atoms/Container/Container';
 
-const LeadImageSlot = ({ data, properties }) => {
-  const Image = config.getComponent({ name: 'Image' }).component;
+interface FormState {
+  content: {
+    data: Content;
+  };
+  form: {
+    global: Content;
+  };
+}
+
+export const LeadImageSlot = ({ content }: { content: Content }) => {
+  const [isClient, setIsClient] = useState(false);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const formData = useSelector<FormState, Content>(
+    (state) => state.form.global,
+  );
+
+  const data = isClient ? (isEmpty(formData) ? content : formData) : content;
+
   const imageField =
-    properties.image ||
-    properties.preview_image_link ||
-    properties.preview_image;
+    data.image || data.preview_image_link || data.preview_image;
 
   return (
-    <p
-      className={cx(
-        'block image align',
-        {
-          center: !Boolean(data.align),
-        },
-        data.align,
-      )}
-    >
-      {imageField && (
-        <>
-          {(() => {
-            const image = (
-              <Image
-                className={cx({ 'full-width': data.align === 'full' })}
-                item={imageField}
-                imageField="image"
-                sizes={config.blocks.blocksConfig.leadimage.getSizes(data)}
-                alt={properties.image_caption || ''}
-                responsive={true}
-              />
-            );
-            if (data.href) {
-              return (
-                <UniversalLink
-                  href={data.href}
-                  openLinkInNewTab={data.openLinkInNewTab}
-                >
-                  {image}
-                </UniversalLink>
-              );
-            } else {
-              return image;
+    <Container
+      layout
+      className="lead-image-slot"
+      onClick={
+        !isEmpty(formData)
+          ? () => {
+              dispatch(setSidebarTab(0));
+              dispatch(setMetadataFocus('default', 'preview_image_link'));
             }
-          })()}
-        </>
-      )}
-    </p>
+          : null
+      }
+    >
+      {imageField ? (
+        <Image
+          item={imageField}
+          imageField="image"
+          alt={data.preview_caption_link || ''}
+          responsive={true}
+        />
+      ) : null}
+    </Container>
   );
 };

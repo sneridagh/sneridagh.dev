@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import type { Content } from '@plone/types';
 import { setSidebarTab, setMetadataFocus } from '@plone/volto/actions';
 import { isEmpty } from 'lodash';
-import Container from '@kitconcept/volto-light-theme/components/Atoms/Container/Container';
+import { Container } from '@plone/components';
 
 interface FormState {
   content: {

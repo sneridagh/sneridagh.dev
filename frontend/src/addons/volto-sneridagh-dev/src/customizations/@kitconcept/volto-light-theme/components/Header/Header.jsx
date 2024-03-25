@@ -1,7 +1,7 @@
 // SemanticUI-free pre-@plone/components
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import Container from '@kitconcept/volto-light-theme/components/Atoms/Container/Container';
+import { Container } from '@plone/components';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import MobileNavigation from '@kitconcept/volto-light-theme/components/MobileNavigation/MobileNavigation';

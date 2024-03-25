@@ -1,6 +1,6 @@
 // SemanticUI-free pre-@plone/components
 import PloneLogoImage from '@plone/volto/components/theme/Logo/Logo.svg';
-import Container from '@kitconcept/volto-light-theme/components/Atoms/Container/Container';
+import { Container } from '@plone/components';
 
 const Footer = () => {
   return (

@@ -26,7 +26,8 @@
     "build-storybook": "storybook build"
   },
   "workspaces": [
-    "src/addons/volto-sneridagh-dev"
+    "src/addons/volto-sneridagh-dev",
+    "src/addons/volto-code-block"
   ],
   "addons": [
     "volto-sneridagh-dev"

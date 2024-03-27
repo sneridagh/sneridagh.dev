@@ -1,4 +1,5 @@
 @import 'typography';
+@import 'prism-sneridagh';
 
 :root {
   // --narrow-container-width: 1100px;
@@ -19,7 +20,8 @@
 }
 
 #page-document .blocks-group-wrapper {
-  & > .documentFirstHeading {
+  & > .documentFirstHeading,
+  & > .block.code {
     @include default-container-width();
     @include adjustMarginsToContainer($default-container-width);
   }
@@ -44,7 +46,7 @@
   }
 }
 
-code {
+p code {
   padding: 0.2em 0.2em;
   border-radius: 3px;
   background-color: rgba(175, 184, 193, 0.2);
@@ -58,4 +60,8 @@ code {
     aspect-ratio: 24/11;
     object-fit: cover;
   }
+}
+
+.block.html {
+  text-align: center;
 }

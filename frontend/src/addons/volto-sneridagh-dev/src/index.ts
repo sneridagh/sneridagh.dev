@@ -46,6 +46,9 @@ const applyConfig = (config: ConfigType) => {
       properties.hasOwnProperty('preview_image_link')
     );
 
+  config.blocks.blocksConfig.codeBlock.defaultLanguage = 'tsx';
+  config.blocks.blocksConfig.codeBlock.defaultStyle = 'dark';
+
   return config;
 };
 

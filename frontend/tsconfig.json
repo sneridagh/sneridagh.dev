@@ -26,8 +26,14 @@
             "@root/*": [
                 "."
             ],
+            "@kitconcept/volto-code-block": [
+                "addons/volto-code-block"
+            ],
             "volto-sneridagh-dev": [
                 "addons/volto-sneridagh-dev/src"
+            ],
+            "@plonegovbr/volto-code-block": [
+                "addons/volto-code-block"
             ]
         },
         "baseUrl": "src"

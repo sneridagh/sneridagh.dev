@@ -3,6 +3,8 @@ import type { PreviewImage } from '@plone/types/src/content/common';
 import { ContentTypeCondition } from '@plone/volto/helpers';
 import { LeadImageSlot } from './components/LeadImageSlot/LeadImageSlot';
 import LogoImage from './sneridaghLogo.png';
+import { CodeStylingSchema } from './components/Blocks/code/schema';
+import BlockWidthWidget from './components/Widgets/BlockWidthWidget';
 
 // We extend the Content type to include the new fields from the ICTA behavior
 declare module '@plone/types' {
@@ -48,6 +50,9 @@ const applyConfig = (config: ConfigType) => {
 
   config.blocks.blocksConfig.codeBlock.defaultLanguage = 'tsx';
   config.blocks.blocksConfig.codeBlock.defaultStyle = 'dark';
+
+  config.widgets.widget.blockWidth = BlockWidthWidget;
+  config.blocks.blocksConfig.codeBlock.schemaEnhancer = CodeStylingSchema;
 
   return config;
 };

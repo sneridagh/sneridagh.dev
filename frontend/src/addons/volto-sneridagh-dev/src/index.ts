@@ -26,6 +26,7 @@ const applyConfig = (config: ConfigType) => {
   };
 
   config.settings.enableFatMenu = false;
+  config.settings.contentMetadataTagsImageField = 'preview_image_link';
 
   config.settings.slate.toolbarButtons.push('code');
 

@@ -104,7 +104,10 @@ const ContentMetadataTags = (props) => {
         />
         {seo_noindex && <meta name="robots" content="noindex" />}
         {contentImageInfo.contentHasImage && (
-          <meta property="og:image" content={contentImageInfo.url} />
+          <meta
+            property="og:image"
+            content={toPublicURL(contentImageInfo.url)}
+          />
         )}
         {contentImageInfo.contentHasImage && (
           <meta property="og:image:width" content={contentImageInfo.width} />

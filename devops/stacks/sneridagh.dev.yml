@@ -31,7 +31,7 @@ services:
         - traefik.http.routers.rt-frontend.tls=true
         - traefik.http.routers.rt-frontend.tls.certresolver=le
         - traefik.http.routers.rt-frontend.service=svc-frontend
-        - traefik.http.routers.frontend.middlewares=gzip
+        - traefik.http.routers.rt-frontend.middlewares=gzip
 
   backend:
     image: ghcr.io/sneridagh/sneridagh-dev-backend:${STACK_PARAM:-latest}

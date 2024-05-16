@@ -1,11 +1,9 @@
 {
-  "volto-sneridagh-dev": {
-    "local": "addons/volto-sneridagh-dev/src"
-  },
-  "volto-code-block": {
-    "package": "@plonegovbr/volto-code-block",
-    "url": "git@github.com:sneridagh/volto-code-block.git",
-    "https": "https://github.com/sneridagh/volto-code-block.git",
-    "branch": "fixaccordionaddjsxtsx"
+  "core": {
+    "output": "./",
+    "package": "@plone/volto",
+    "url": "git@github.com:plone/volto.git",
+    "https": "https://github.com/plone/volto.git",
+    "tag": "18.0.0-alpha.31"
   }
 }

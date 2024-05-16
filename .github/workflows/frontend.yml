@@ -31,13 +31,11 @@ jobs:
         id: vars
         run: |
           echo "BASE_TAG=sha-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
-          python3 -c 'import json; data = json.load(open("frontend/package.json")); print("VOLTO_VERSION=" + data["dependencies"]["@plone/volto"])' >> $GITHUB_OUTPUT
-          echo "PLONE_VERSION=$(cat backend/version.txt)" >> $GITHUB_OUTPUT
+          python3 -c 'import json; data = json.load(open("./mrs.developer.json")); print("VOLTO_VERSION=" + data["core"]["tag"])' >> $GITHUB_OUTPUT
       - name: Test vars
         run: |
           echo "BASE_TAG=${{ steps.vars.outputs.BASE_TAG }}"
           echo "VOLTO_VERSION=${{ steps.vars.outputs.VOLTO_VERSION }}"
-          echo "PLONE_VERSION=${{ steps.vars.outputs.PLONE_VERSION }}"
 
   code-analysis:
     runs-on: ubuntu-latest

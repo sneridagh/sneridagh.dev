@@ -22,9 +22,10 @@ module.exports = {
             `${coreLocation}/core/packages/volto-slate/src`,
           ],
           ['@plone/registry', `${coreLocation}/packages/registry/src`],
+          ['volto-sneridagh-dev', './packages/volto-sneridagh-dev/src'],
           [
-            'volto-addon',
-            './packages/volto-addon/src',
+            '@kitconcept/volto-light-theme',
+            './packages/volto-sneridagh-dev/node_modules/@kitconcept/volto-light-theme/src',
           ],
         ],
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],

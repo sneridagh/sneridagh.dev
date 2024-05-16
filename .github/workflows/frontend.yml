@@ -11,7 +11,6 @@ env:
   IMAGE_NAME_PREFIX: ghcr.io/sneridagh/sneridagh-dev
   IMAGE_NAME_SUFFIX: frontend
   NODE_VERSION: 20.x
-  VOLTO_VERSION: "18.0.0-alpha.15"
 
 defaults:
   run:
@@ -19,40 +18,69 @@ defaults:
 
 jobs:
 
+  meta:
+    runs-on: ubuntu-latest
+    outputs:
+      BASE_TAG: ${{ steps.vars.outputs.BASE_TAG }}
+      VOLTO_VERSION: ${{ steps.vars.outputs.VOLTO_VERSION }}
+      PLONE_VERSION: ${{ steps.vars.outputs.PLONE_VERSION }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Compute several vars needed for the build
+        id: vars
+        run: |
+          echo "BASE_TAG=sha-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          python3 -c 'import json; data = json.load(open("./mrs.developer.json")); print("VOLTO_VERSION=" + data["core"]["tag"])' >> $GITHUB_OUTPUT
+      - name: Test vars
+        run: |
+          echo "BASE_TAG=${{ steps.vars.outputs.BASE_TAG }}"
+          echo "VOLTO_VERSION=${{ steps.vars.outputs.VOLTO_VERSION }}"
+
   code-analysis:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout codebase
+      - name: Main checkout
         uses: actions/checkout@v4
 
-      - name: Update Global Yarn
-        run: |
-          corepack enable
-          corepack prepare yarn@stable --activate
-
-      - name: Use Node.js ${{ env.node-version }}
+      - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-          cache: 'yarn'
-          cache-dependency-path: 'frontend/yarn.lock'
 
-      - name: Prettier
-        id: prettier
-        run: npx prettier@3.0.3 --single-quote --check 'src/**/*.{js,jsx,ts,tsx,css,scss}' --config=package.json
+      - uses: pnpm/action-setup@v3
+        name: Install pnpm
+        with:
+          version: 9
+          # We don't want to install until later,
+          # when the cache is in place
+          run_install: false
 
-      - name: Install packages
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
         run: make install
 
-      - name: ESLint
-        id: eslint
+      - name: Linting
+        id: lint
         if: ${{ success() || failure() }}
-        run: yarn run lint:ci
+        run: make lint
 
       - name: i18n sync
         id: i18n
         if: ${{ success() || failure() }}
-        run: make i18n-ci
+        run: make ci-i18n
 
       - name: Unit Tests
         id: unit
@@ -65,8 +93,7 @@ jobs:
           echo '# Code Analysis' >> $GITHUB_STEP_SUMMARY
           echo '| Test | Status |' >> $GITHUB_STEP_SUMMARY
           echo '| --- | --- |' >> $GITHUB_STEP_SUMMARY
-          echo '| Prettier | ${{ steps.prettier.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY
-          echo '| ESLint | ${{ steps.eslint.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY
+          echo '| Lint | ${{ steps.lint.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY
           echo '| i18n | ${{ steps.i18n.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY
           echo '| Unit Tests | ${{ steps.unit.conclusion == 'failure' && '❌' || ' ✅' }} |' >> $GITHUB_STEP_SUMMARY
 
@@ -74,6 +101,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     needs:
+      - meta
       - code-analysis
     permissions:
       contents: read
@@ -122,4 +150,4 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: $${{ steps.meta.outputs.labels }}
           build-args: |
-            VOLTO_VERSION=${{ env.VOLTO_VERSION }}
+            VOLTO_VERSION=${{ needs.meta.outputs.VOLTO_VERSION }}

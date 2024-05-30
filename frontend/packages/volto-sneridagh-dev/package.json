@@ -41,10 +41,10 @@
     "@kitconcept/volto-heading-block": "^2.4.0",
     "@kitconcept/volto-highlight-block": "^3.0.1",
     "@kitconcept/volto-introduction-block": "^1.0.0",
-    "@kitconcept/volto-light-theme": "3.2.0",
+    "@kitconcept/volto-light-theme": "3.3.1",
     "@kitconcept/volto-separator-block": "^4.1.1",
     "@kitconcept/volto-slider-block": "^6.3.1",
-    "@plone/components": "2.0.0-alpha.8"
+    "@plone/components": "2.0.0-alpha.10"
   },
   "devDependencies": {
     "@plone/scripts": "^3.6.1",

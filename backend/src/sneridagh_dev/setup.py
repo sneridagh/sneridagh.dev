@@ -1,4 +1,5 @@
 """Installer for the sneridagh_dev package."""
+
 from pathlib import Path
 from setuptools import find_packages
 from setuptools import setup
@@ -55,7 +56,7 @@ setup(
             "pytest-plone>=0.2.0",
             "pytest-cov",
             "pytest",
-            "gocept.pytestlayer",
+            "pytest-plone>=0.5.0",
             "zest.releaser[recommended]",
             "plone.app.testing[robot]>=7.0.0a3",
             "plone.restapi[test]",

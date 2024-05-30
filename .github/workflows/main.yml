@@ -1,10 +1,20 @@
-name: Deployment of sneridagh.dev
+name: Main
 
 on:
+  push:
+    paths:
+      - "backend/**"
+      - "frontend/**"
+      - ".github/workflows/backend.yml"
+      - ".github/workflows/frontend.yml"
   workflow_dispatch:
 
-
 jobs:
+  backend:
+    uses: ./.github/workflows/backend.yml
+
+  frontend:
+    uses: ./.github/workflows/frontend.yml
 
   meta:
     runs-on: ubuntu-latest
@@ -26,6 +36,8 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' }}
     needs:
       - meta
+      - backend
+      - frontend
     runs-on: ubuntu-latest
     environment: ${{ needs.meta.outputs.ENVIRONMENT }}
     steps:

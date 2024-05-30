@@ -12,9 +12,15 @@ on:
 jobs:
   backend:
     uses: ./.github/workflows/backend.yml
+    permissions:
+      contents: read
+      packages: write
 
   frontend:
     uses: ./.github/workflows/frontend.yml
+    permissions:
+      contents: read
+      packages: write
 
   meta:
     runs-on: ubuntu-latest

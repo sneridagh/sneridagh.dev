@@ -27,6 +27,10 @@ module.exports = {
             '@kitconcept/volto-light-theme',
             './packages/volto-sneridagh-dev/node_modules/@kitconcept/volto-light-theme/src',
           ],
+          [
+            '@plonegovbr/volto-code-block',
+            './packages/volto-sneridagh-dev/node_modules/@plonegovbr/volto-code-block/src',
+          ],
         ],
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       },

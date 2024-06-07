@@ -35,7 +35,6 @@
   "dependencies": {
     "@eeacms/volto-accordion-block": "^10.4.6",
     "@eeacms/volto-matomo": "4.2.1",
-    "@plonegovbr/volto-code-block": "2.3.0",
     "@kitconcept/volto-button-block": "^2.3.1",
     "@kitconcept/volto-dsgvo-banner": "^2.3.2",
     "@kitconcept/volto-heading-block": "^2.4.0",
@@ -44,10 +43,12 @@
     "@kitconcept/volto-light-theme": "3.3.1",
     "@kitconcept/volto-separator-block": "^4.1.1",
     "@kitconcept/volto-slider-block": "^6.3.1",
-    "@plone/components": "2.0.0-alpha.10"
+    "@plone/components": "workspace:*",
+    "@plonegovbr/volto-code-block": "2.3.0",
+    "classnames": "2.2.6"
   },
   "devDependencies": {
-    "@plone/scripts": "^3.6.1",
+    "@plone/scripts": "workspace:*",
     "release-it": "^17.1.1"
   },
   "peerDependencies": {

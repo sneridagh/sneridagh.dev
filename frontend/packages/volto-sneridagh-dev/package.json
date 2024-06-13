@@ -49,6 +49,9 @@
   },
   "devDependencies": {
     "@plone/scripts": "workspace:*",
+    "@plone/types": "workspace:*",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "release-it": "^17.1.1"
   },
   "peerDependencies": {

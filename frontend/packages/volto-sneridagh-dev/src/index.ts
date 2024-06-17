@@ -1,17 +1,31 @@
 import type { ConfigType } from '@plone/registry';
-import type { PreviewImage } from '@plone/types/src/content/common';
+import type {
+  BlockConfigBase,
+  Image,
+  Content as PloneContent,
+} from '@plone/types';
 import { ContentTypeCondition } from '@plone/volto/helpers';
 import { LeadImageSlot } from './components/LeadImageSlot/LeadImageSlot';
 import LogoImage from './sneridaghLogo.png';
 import { CodeStylingSchema } from './components/Blocks/code/schema';
 import BlockWidthWidget from './components/Widgets/BlockWidthWidget';
 
-// We extend the Content type to include the new fields from the ICTA behavior
 declare module '@plone/types' {
   export interface Content {
-    image: PreviewImage;
-    preview_image_link: PreviewImage;
-    preview_caption_link: string;
+    preview_image_link?: PloneContent;
+    preview_image?: Image;
+    preview_caption_link?: string;
+  }
+
+  export interface BlocksConfigData {
+    codeBlock: BlockConfigBase & {
+      defaultLanguage: string;
+      defaultStyle: string;
+    };
+  }
+
+  export interface WidgetsConfigByWidget {
+    blockWidth: React.ComponentType<any>;
   }
 }
 
@@ -28,10 +42,12 @@ const applyConfig = (config: ConfigType) => {
   config.settings.enableFatMenu = false;
   config.settings.contentMetadataTagsImageField = 'preview_image_link';
 
+  // @ts-ignore
   config.settings.slate.toolbarButtons.push('code');
 
   config.registerComponent({
     name: 'LogoImage',
+    // @ts-ignore
     component: LogoImage,
   });
 
@@ -41,13 +57,6 @@ const applyConfig = (config: ConfigType) => {
     component: LeadImageSlot,
     predicates: [ContentTypeCondition(['Post'])],
   });
-
-  config.blocks.blocksConfig.leadimage.restricted = ({ properties }) =>
-    !(
-      properties.hasOwnProperty('image') ||
-      properties.hasOwnProperty('preview_image') ||
-      properties.hasOwnProperty('preview_image_link')
-    );
 
   config.blocks.blocksConfig.codeBlock.defaultLanguage = 'tsx';
   config.blocks.blocksConfig.codeBlock.defaultStyle = 'dark';

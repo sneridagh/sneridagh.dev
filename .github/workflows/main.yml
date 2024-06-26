@@ -58,7 +58,7 @@ jobs:
       packages: write
 
   deploy:
-    if: ${{ always() }}
+    if: ${{ !contains(needs.*.result, 'failure') }}
     needs:
       - config
       - backend

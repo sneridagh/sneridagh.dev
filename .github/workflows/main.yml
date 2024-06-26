@@ -52,10 +52,10 @@ jobs:
     steps:
       - name: Run Backend workflow
         uses: ./.github/workflows/backend.yml
-        if: ${{ needs.changes.outputs.backend == 'true' }}
+        if: ${{ needs.config.outputs.backend == 'true' }}
 
       - name: Backend run sentinel
-        if: ${{ needs.changes.outputs.backend == 'false' }}
+        if: ${{ needs.config.outputs.backend == 'false' }}
         run: exit 1
 
   frontend:
@@ -69,10 +69,10 @@ jobs:
     steps:
       - name: Run Frontend workflow
         uses: ./.github/workflows/frontend.yml
-        if: ${{ needs.changes.outputs.frontend == 'true' }}
+        if: ${{ needs.config.outputs.frontend == 'true' }}
 
       - name: Frontend run sentinel
-        if: ${{ needs.changes.outputs.frontend == 'false' }}
+        if: ${{ needs.config.outputs.frontend == 'false' }}
         run: exit 1
 
   deploy:

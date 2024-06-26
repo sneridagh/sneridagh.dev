@@ -5,6 +5,7 @@ import { LeadImageSlot } from './components/LeadImageSlot/LeadImageSlot';
 import LogoImage from './sneridaghLogo.png';
 import { CodeStylingSchema } from './components/Blocks/code/schema';
 import BlockWidthWidget from './components/Widgets/BlockWidthWidget';
+import BlockWidthWidget2 from './components/Widgets/BlockWidthWidget';
 
 // We extend the Content type to include the new fields from the ICTA behavior
 declare module '@plone/types' {

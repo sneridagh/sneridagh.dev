@@ -43,6 +43,7 @@ jobs:
 
   backend:
     runs-on: ubuntu-latest
+    if: always()
     needs: config
     permissions:
       contents: read
@@ -59,6 +60,7 @@ jobs:
 
   frontend:
     runs-on: ubuntu-latest
+    if: always()
     needs: config
     permissions:
       contents: read

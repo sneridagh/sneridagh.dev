@@ -5,10 +5,10 @@ on:
     paths:
       - "backend/**"
       - "frontend/**"
+      - "devops/**"
       - ".github/workflows/backend.yml"
       - ".github/workflows/frontend.yml"
       - ".github/workflows/main.yml"
-      - "devops/**"
   workflow_dispatch:
 
 jobs:
@@ -60,7 +60,6 @@ jobs:
   frontend:
     runs-on: ubuntu-latest
     needs: config
-    if: ${{ needs.changes.outputs.frontend == 'true' }}
     permissions:
       contents: read
       packages: write

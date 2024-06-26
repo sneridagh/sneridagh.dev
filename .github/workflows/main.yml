@@ -5,10 +5,8 @@ on:
     paths:
       - "backend/**"
       - "frontend/**"
-      - "devops/**"
       - ".github/workflows/backend.yml"
       - ".github/workflows/frontend.yml"
-      - ".github/workflows/main.yml"
   workflow_dispatch:
 
 jobs:
@@ -42,47 +40,23 @@ jobs:
               - '.github/workflows/frontend.yml'
 
   backend:
-    runs-on: ubuntu-latest
-    if: always()
+    uses: ./.github/workflows/backend.yml
     needs: config
+    if: ${{ needs.config.outputs.backend == 'true' }}
     permissions:
       contents: read
       packages: write
-
-    steps:
-      - name: Main checkout
-        uses: actions/checkout@v4
-
-      - name: Run Backend workflow
-        uses: ./.github/workflows/backend.yml
-        if: ${{ needs.config.outputs.backend == 'true' }}
-
-      - name: Backend run sentinel
-        if: ${{ needs.config.outputs.backend == 'false' }}
-        run: exit 1
 
   frontend:
-    runs-on: ubuntu-latest
-    if: always()
+    uses: ./.github/workflows/frontend.yml
     needs: config
+    if: ${{ needs.config.outputs.frontend == 'true' }}
     permissions:
       contents: read
       packages: write
 
-    steps:
-      - name: Main checkout
-        uses: actions/checkout@v4
-
-      - name: Run Frontend workflow
-        uses: ./.github/workflows/frontend.yml
-        if: ${{ needs.config.outputs.frontend == 'true' }}
-
-      - name: Frontend run sentinel
-        if: ${{ needs.config.outputs.frontend == 'false' }}
-        run: exit 1
-
   deploy:
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ always() }}
     needs:
       - config
       - backend
@@ -94,6 +68,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Deploy to cluster
+        if: ${{ github.ref == 'refs/heads/main' }}
         uses: kitconcept/docker-stack-deploy@v1.2.0
         with:
           registry: "ghcr.io"

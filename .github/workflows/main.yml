@@ -58,7 +58,7 @@ jobs:
       packages: write
 
   deploy:
-    if: ${{ !contains(needs.*.result, 'failure') }}
+    if: ${{ always() && github.ref == 'refs/heads/main' && !contains(needs.*.result, 'failure') }}
     needs:
       - config
       - backend
@@ -70,7 +70,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Deploy to cluster
-        if: ${{ github.ref == 'refs/heads/main' }}
         uses: kitconcept/docker-stack-deploy@v1.2.0
         with:
           registry: "ghcr.io"

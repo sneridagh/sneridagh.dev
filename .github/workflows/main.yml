@@ -7,6 +7,8 @@ on:
       - "frontend/**"
       - ".github/workflows/backend.yml"
       - ".github/workflows/frontend.yml"
+      - ".github/workflows/main.yml"
+      - "devops/**"
   workflow_dispatch:
 
 jobs:
@@ -42,7 +44,7 @@ jobs:
   backend:
     uses: ./.github/workflows/backend.yml
     needs: config
-    if: ${{ needs.changes.outputs.backend == 'true' }}
+    if: ${{ needs.config.outputs.backend == 'true' }}
     permissions:
       contents: read
       packages: write
@@ -50,13 +52,13 @@ jobs:
   frontend:
     uses: ./.github/workflows/frontend.yml
     needs: config
-    if: ${{ needs.changes.outputs.frontend == 'true' }}
+    if: ${{ needs.config.outputs.frontend == 'true' }}
     permissions:
       contents: read
       packages: write
 
   deploy:
-    if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ !contains(needs.*.result, 'failure') }}
     needs:
       - config
       - backend
@@ -68,6 +70,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Deploy to cluster
+        if: ${{ github.ref == 'refs/heads/main' }}
         uses: kitconcept/docker-stack-deploy@v1.2.0
         with:
           registry: "ghcr.io"

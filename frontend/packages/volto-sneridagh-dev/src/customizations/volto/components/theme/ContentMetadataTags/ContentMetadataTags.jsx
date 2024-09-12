@@ -44,8 +44,8 @@ const ContentMetadataTags = (props) => {
       width: null,
     };
 
-    if (image.image_scales) {
-      image = image.image_scales.image[0]; // preview_image_link use case
+    if (image?.image_scales) {
+      image = image.image_scales?.image[0]; // preview_image_link use case
     }
 
     if (opengraph_image?.scales?.large?.download) {

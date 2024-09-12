@@ -34,7 +34,7 @@ const ContentMetadataTags = (props) => {
 
   const getContentImageInfo = () => {
     const { contentMetadataTagsImageField } = config.settings;
-    const image = props.content[contentMetadataTagsImageField];
+    let image = props.content[contentMetadataTagsImageField];
     const { opengraph_image } = props.content;
 
     const contentImageInfo = {
@@ -43,6 +43,10 @@ const ContentMetadataTags = (props) => {
       height: null,
       width: null,
     };
+
+    if (image.image_scales) {
+      image = image.image_scales.image[0]; // preview_image_link use case
+    }
 
     if (opengraph_image?.scales?.large?.download) {
       contentImageInfo.contentHasImage = true;

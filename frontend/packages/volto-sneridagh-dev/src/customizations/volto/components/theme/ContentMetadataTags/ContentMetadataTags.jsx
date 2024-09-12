@@ -35,6 +35,7 @@ const ContentMetadataTags = (props) => {
   const getContentImageInfo = () => {
     const { contentMetadataTagsImageField } = config.settings;
     let image = props.content[contentMetadataTagsImageField];
+    let imageURL;
     const { opengraph_image } = props.content;
 
     const contentImageInfo = {
@@ -45,6 +46,7 @@ const ContentMetadataTags = (props) => {
     };
 
     if (image?.image_scales) {
+      imageURL = image?.['@id'];
       image = image.image_scales?.image[0]; // preview_image_link use case
     }
 
@@ -56,6 +58,11 @@ const ContentMetadataTags = (props) => {
     } else if (image?.scales?.large?.download) {
       contentImageInfo.contentHasImage = true;
       contentImageInfo.url = image.scales.large.download;
+      if (image.scales.large.download.startsWith('http')) {
+        contentImageInfo.url = image.scales.large.download;
+      } else {
+        contentImageInfo.url = `${imageURL}/${image.scales.large.download}`;
+      }
       contentImageInfo.height = image.scales.large.height;
       contentImageInfo.width = image.scales.large.width;
     } else if (image?.image?.scales?.large?.download) {
@@ -63,7 +70,7 @@ const ContentMetadataTags = (props) => {
       if (image.image.scales.large.download.startsWith('http')) {
         contentImageInfo.url = image.image.scales.large.download;
       } else {
-        contentImageInfo.url = `${image['@id']}/${image.image.scales.large.download}`;
+        contentImageInfo.url = `${imageURL}/${image.image.scales.large.download}`;
       }
       contentImageInfo.height = image.image.scales.large.height;
       contentImageInfo.width = image.image.scales.large.width;

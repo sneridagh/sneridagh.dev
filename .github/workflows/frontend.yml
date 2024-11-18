@@ -7,7 +7,9 @@ on:
 env:
   IMAGE_NAME_PREFIX: ghcr.io/sneridagh/sneridagh-dev
   IMAGE_NAME_SUFFIX: frontend
-  NODE_VERSION: 20.x
+  RR7_IMAGE_NAME_PREFIX: ghcr.io/sneridagh/sneridagh-dev-rr7
+  RR7_IMAGE_NAME_SUFFIX: frontend
+  NODE_VERSION: 22.x
 
 defaults:
   run:
@@ -119,6 +121,21 @@ jobs:
             type=sha
             type=raw,value=latest,enable={{is_default_branch}}
 
+      - name: Docker config
+        id: config-rr7
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ${{ env.RR7_IMAGE_NAME_PREFIX }}-${{ env.RR7_IMAGE_NAME_SUFFIX }}
+          labels: |
+            org.label-schema.docker.cmd=docker run -d -p 3000:3000 ${{ env.RR7_IMAGE_NAME_PREFIX }}-${{ env.RR7_IMAGE_NAME_SUFFIX }}:latest
+          flavor:
+            latest=false
+          tags: |
+            type=ref,event=branch
+            type=sha
+            type=raw,value=latest,enable={{is_default_branch}}
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -131,6 +148,18 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push (RR7)
+        uses: docker/build-push-action@v4
+        with:
+          platforms: linux/amd64
+          context: frontend/rr7
+          file: frontend/rr7/Dockerfile
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.config-rr7.outputs.tags }}
+          labels: $${{ steps.config-rr7.outputs.labels }}
+          build-args: |
+            VOLTO_VERSION=${{ needs.meta.outputs.VOLTO_VERSION }}
 
       - name: Build and push
         uses: docker/build-push-action@v4

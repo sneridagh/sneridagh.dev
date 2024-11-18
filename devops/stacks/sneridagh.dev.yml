@@ -3,6 +3,39 @@ version: '3.8'
 
 services:
 
+  rr7:
+    build:
+      context: ghcr.io/sneridagh/sneridagh-dev-frontend-rr7:${STACK_PARAM:-latest}
+    environment:
+      PLONE_API_PATH: https://rr7.sneridagh.dev
+      PLONE_INTERNAL_API_PATH: http://backend:8080/Plone
+      DEBUG: axios
+    depends_on:
+      - backend
+    networks:
+      - nw-internal
+      - public
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 5s
+        order: start-first
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=public
+      - traefik.constraint-label=public
+      # Service
+      - traefik.http.services.svc-frontend-rr7.loadbalancer.server.port=3000
+      # Routers
+      ## /
+      - traefik.http.routers.rt-frontend-rr7.rule=Host(`rr7.sneridagh.dev`)
+      - traefik.http.routers.rt-frontend-rr7.entrypoints=https
+      - traefik.http.routers.rt-frontend-rr7.tls=true
+      - traefik.http.routers.rt-frontend-rr7.tls.certresolver=le
+      - traefik.http.routers.rt-frontend-rr7.service=svc-frontend-rr7
+      - traefik.http.routers.rt-frontend-rr7.middlewares=gzip
+
   frontend:
     image: ghcr.io/sneridagh/sneridagh-dev-frontend:${STACK_PARAM:-latest}
     environment:
@@ -59,6 +92,9 @@ services:
         ## VHM rewrite /++api++/
         - "traefik.http.middlewares.mw-backend-vhm-api.replacepathregex.regex=^/\\+\\+api\\+\\+($$|/.*)"
         - "traefik.http.middlewares.mw-backend-vhm-api.replacepathregex.replacement=/VirtualHostBase/https/sneridagh.dev:443/Plone/++api++/VirtualHostRoot$$1"
+        ## VHM rewrite /++api++/ RR7
+        - "traefik.http.middlewares.mw-backend-vhm-api-rr7.replacepathregex.regex=^/\\+\\+api\\+\\+($$|/.*)"
+        - "traefik.http.middlewares.mw-backend-vhm-api-rr7.replacepathregex.replacement=/VirtualHostBase/https/rr7.sneridagh.dev:443/Plone/++api++/VirtualHostRoot$$1"
 
         ## VHM rewrite /api/ (Plone NextJS)
         - "traefik.http.middlewares.mw-backend-vhm-api-alt.replacepathregex.regex=^/api($$|/.*)"
@@ -83,6 +119,13 @@ services:
         - traefik.http.routers.rt-backend-api.tls=true
         - traefik.http.routers.rt-backend-api.service=svc-backend
         - traefik.http.routers.rt-backend-api.middlewares=gzip,mw-backend-vhm-api
+
+        ## /++api++ RR7
+        - traefik.http.routers.rt-backend-api-rr7.rule=Host(`rr7.sneridagh.dev`) && (PathPrefix(`/++api++`))
+        - traefik.http.routers.rt-backend-api-rr7.entrypoints=https
+        - traefik.http.routers.rt-backend-api-rr7.tls=true
+        - traefik.http.routers.rt-backend-api-rr7.service=svc-backend
+        - traefik.http.routers.rt-backend-api-rr7.middlewares=gzip,mw-backend-vhm-api-rr7
 
         ## /api (NextJS rewrite workaround)
         - traefik.http.routers.rt-backend-api-alt.rule=Host(`sneridagh.dev`) && PathPrefix(`/api`)

@@ -7,7 +7,7 @@ import {
   ScrollRestoration,
   useHref,
   useLocation,
-  useNavigate,
+  useNavigate as useRRNavigate,
   useParams,
 } from 'react-router';
 import type { LinksFunction } from 'react-router';
@@ -24,6 +24,15 @@ import '@plone/theming/styles/main.css';
 import '@plone/slots/main.css';
 
 install();
+
+function useNavigate() {
+  const navigate = useRRNavigate();
+  return (to: string) => navigate(flattenToAppURL(to));
+}
+
+function useHrefLocal(to: string) {
+  return useHref(flattenToAppURL(to));
+}
 
 export const links: LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -76,14 +85,10 @@ export default function App() {
     }),
   );
 
-  const RRNavigate = useNavigate();
-  const navigate = (to: string) => {
-    return RRNavigate(flattenToAppURL(to));
-  };
-
-  function useHrefLocal(to: string) {
-    return useHref(flattenToAppURL(to));
-  }
+  const navigate = useNavigate();
+  // const useNavigate = (to: string) => {
+  //   return RRNavigate(flattenToAppURL(to));
+  // };
 
   return (
     <PloneProvider

@@ -20,20 +20,21 @@ services:
         parallelism: 1
         delay: 5s
         order: start-first
-    labels:
-      - traefik.enable=true
-      - traefik.docker.network=public
-      - traefik.constraint-label=public
-      # Service
-      - traefik.http.services.svc-frontend-rr7.loadbalancer.server.port=3000
-      # Routers
-      ## /
-      - traefik.http.routers.rt-frontend-rr7.rule=Host(`rr7.sneridagh.dev`)
-      - traefik.http.routers.rt-frontend-rr7.entrypoints=https
-      - traefik.http.routers.rt-frontend-rr7.tls=true
-      - traefik.http.routers.rt-frontend-rr7.tls.certresolver=le
-      - traefik.http.routers.rt-frontend-rr7.service=svc-frontend-rr7
-      - traefik.http.routers.rt-frontend-rr7.middlewares=gzip
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=public
+        - traefik.constraint-label=public
+        # Service
+        - traefik.http.services.svc-frontend-rr7.loadbalancer.server.port=3000
+        # Routers
+        ## /
+        - traefik.http.routers.rt-frontend-rr7.rule=Host(`rr7.sneridagh.dev`)
+        - traefik.http.routers.rt-frontend-rr7.entrypoints=https
+        - traefik.http.routers.rt-frontend-rr7.tls=true
+        - traefik.http.routers.rt-frontend-rr7.tls.certresolver=le
+        - traefik.http.routers.rt-frontend-rr7.service=svc-frontend-rr7
+        - traefik.http.routers.rt-frontend-rr7.middlewares=gzip
+        - traefik.http.routers.rt-frontend-rr7.priority=1
 
   frontend:
     image: ghcr.io/sneridagh/sneridagh-dev-frontend:${STACK_PARAM:-latest}
@@ -125,6 +126,7 @@ services:
         - traefik.http.routers.rt-backend-api-rr7.tls=true
         - traefik.http.routers.rt-backend-api-rr7.service=svc-backend
         - traefik.http.routers.rt-backend-api-rr7.middlewares=gzip,mw-backend-vhm-api-rr7
+        - traefik.http.routers.rt-backend-api-rr7.priority=100
 
         ## /api (NextJS rewrite workaround)
         - traefik.http.routers.rt-backend-api-alt.rule=Host(`sneridagh.dev`) && PathPrefix(`/api`)

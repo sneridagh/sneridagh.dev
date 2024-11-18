@@ -13,7 +13,7 @@ export function flattenToAppURL(url: string) {
     url &&
     url
       .replace(settings.apiPath, '')
-      .replace(settings.internalApiPath || '', '')
+      .replace(settings.internalApiPath, '')
       .replace('http://localhost:3000', '');
   return result;
 }

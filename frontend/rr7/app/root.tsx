@@ -51,7 +51,7 @@ export const links: LinksFunction = () => [
 
 export async function loader() {
   const ssrConfig = installSSR();
-  console.log('loader from root loading');
+
   return {
     env: {
       PLONE_API_PATH: ssrConfig.settings.apiPath,
@@ -80,6 +80,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
           }}
         />
         <Scripts />
+        <img
+          referrerPolicy="no-referrer-when-downgrade"
+          src="https://analytics.sneridagh.dev/matomo.php?idsite=2&amp;rec=1"
+          style={{ border: 0 }}
+          alt=""
+        />
       </body>
     </html>
   );

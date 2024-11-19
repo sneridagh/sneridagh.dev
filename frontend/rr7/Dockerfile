@@ -48,7 +48,7 @@ WORKDIR /app/rr7
 EXPOSE 3000
 
 # Set healthcheck to port 3000
-# HEALTHCHECK --interval=10s --timeout=5s --start-period=30s CMD [ -n "$LISTEN_PORT" ] || LISTEN_PORT=3000 ; wget -q http://127.0.0.1:"$LISTEN_PORT" -O - || exit 1
+HEALTHCHECK --interval=10s --timeout=5s --start-period=30s CMD [ -n "$LISTEN_PORT" ] || LISTEN_PORT=3000 ; wget -q http://127.0.0.1:"$LISTEN_PORT"/ok -O - || exit 1
 
 # Entrypoint would be pnpm
 ENTRYPOINT [ "pnpm" ]

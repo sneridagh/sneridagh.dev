@@ -29,6 +29,7 @@ services:
         - traefik.http.routers.traefik-public-https.rule=Host(`traefik.sneridagh.dev`)
         - traefik.http.routers.traefik-public-https.entrypoints=https
         - traefik.http.routers.traefik-public-https.tls=true
+        - traefik.http.routers.traefik-public-https.tls.certresolver=le
         - traefik.http.routers.traefik-public-https.service=api@internal
         - traefik.http.routers.traefik-public-https.middlewares=admin-auth
 

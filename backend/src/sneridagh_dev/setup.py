@@ -50,6 +50,7 @@ setup(
         "Plone",
         "prettyconf",
         "plone.api",
+        "collective.exportimport",
     ],
     extras_require={
         "test": [

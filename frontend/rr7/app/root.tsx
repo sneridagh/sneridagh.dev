@@ -9,6 +9,7 @@ import {
   useLocation,
   useNavigate as useRRNavigate,
   useParams,
+  useLoaderData,
 } from 'react-router';
 import type { LinksFunction } from 'react-router';
 
@@ -19,11 +20,12 @@ import { PloneProvider } from '@plone/providers';
 import { flattenToAppURL } from './utils';
 import config from '@plone/registry';
 import install from './config';
+import installSSR from './config.server';
+
+install();
 
 import '@plone/theming/styles/main.css';
 import '@plone/slots/main.css';
-
-install();
 
 function useNavigate() {
   const navigate = useRRNavigate();
@@ -47,7 +49,20 @@ export const links: LinksFunction = () => [
   },
 ];
 
+export async function loader() {
+  const ssrConfig = installSSR();
+  console.log('loader from root loading');
+  return {
+    env: {
+      PLONE_API_PATH: ssrConfig.settings.apiPath,
+      PLONE_INTERNAL_API_PATH: ssrConfig.settings.internalApiPath,
+    },
+  };
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
+  const data = useLoaderData<typeof loader>();
+
   return (
     <html lang="en">
       <head>
@@ -59,6 +74,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body>
         {children}
         <ScrollRestoration />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.env = ${JSON.stringify(data.env)}`,
+          }}
+        />
         <Scripts />
       </body>
     </html>
@@ -66,6 +86,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  if (!import.meta.env.SSR) {
+    config.settings.apiPath = window.env.PLONE_API_PATH;
+    config.settings.internalApiPath = window.env.PLONE_INTERNAL_API_PATH;
+  }
+
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -86,9 +111,6 @@ export default function App() {
   );
 
   const navigate = useNavigate();
-  // const useNavigate = (to: string) => {
-  //   return RRNavigate(flattenToAppURL(to));
-  // };
 
   return (
     <PloneProvider

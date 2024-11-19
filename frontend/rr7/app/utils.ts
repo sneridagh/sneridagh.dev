@@ -9,6 +9,7 @@ import config from '@plone/registry';
  */
 export function flattenToAppURL(url: string) {
   const { settings } = config;
+
   const result =
     url &&
     url

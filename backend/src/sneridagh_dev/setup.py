@@ -51,6 +51,7 @@ setup(
         "prettyconf",
         "plone.api",
         "collective.exportimport",
+        "rss_provider",
     ],
     extras_require={
         "test": [

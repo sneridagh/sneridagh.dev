@@ -65,6 +65,7 @@ setup(
             "collective.exportimport",
             "kitconcept.seo",
             "collective.blog",
+            "rss_provider",
         ],
     },
     entry_points="""

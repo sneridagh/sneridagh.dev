@@ -51,6 +51,7 @@ setup(
         "prettyconf",
         "plone.api",
         "collective.exportimport",
+        "rss_provider",
     ],
     extras_require={
         "test": [
@@ -65,7 +66,6 @@ setup(
             "collective.exportimport",
             "kitconcept.seo",
             "collective.blog",
-            "rss_provider",
         ],
     },
     entry_points="""

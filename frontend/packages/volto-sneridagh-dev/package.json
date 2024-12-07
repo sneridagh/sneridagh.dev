@@ -23,6 +23,7 @@
     "@kitconcept/volto-separator-block",
     "@kitconcept/volto-slider-block",
     "@plonegovbr/volto-code-block",
+    "volto-rss-provider",
     "@kitconcept/volto-light-theme"
   ],
   "scripts": {

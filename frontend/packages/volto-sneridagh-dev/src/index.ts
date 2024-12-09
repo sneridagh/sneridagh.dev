@@ -1,17 +1,24 @@
 import type { ConfigType } from '@plone/registry';
-import type { PreviewImage } from '@plone/types/src/content/common';
-import { ContentTypeCondition } from '@plone/volto/helpers';
 import { LeadImageSlot } from './components/LeadImageSlot/LeadImageSlot';
+import { ContentTypeCondition } from '@plone/volto/helpers/Slots';
 import LogoImage from './sneridaghLogo.png';
 import { CodeStylingSchema } from './components/Blocks/code/schema';
 import BlockWidthWidget from './components/Widgets/BlockWidthWidget';
+import type { BlockConfigBase } from '@plone/types';
 
 // We extend the Content type to include the new fields from the ICTA behavior
 declare module '@plone/types' {
   export interface Content {
-    image: PreviewImage;
-    preview_image_link: PreviewImage;
+    preview_image_link: Content;
     preview_caption_link: string;
+  }
+
+  export interface BlocksConfigData {
+    codeBlock: BlockConfigBase;
+  }
+
+  export interface WidgetsConfigByWidget {
+    blockWidth: React.ComponentType;
   }
 }
 

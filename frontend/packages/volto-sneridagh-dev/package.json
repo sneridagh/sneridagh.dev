@@ -1,6 +1,6 @@
 {
   "name": "volto-sneridagh-dev",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "volto-sneridagh-dev: Volto add-on",
   "main": "src/index.ts",
   "license": "MIT",
@@ -34,16 +34,8 @@
     "release-alpha": "release-it --preRelease=alpha"
   },
   "dependencies": {
-    "@eeacms/volto-accordion-block": "^10.4.6",
     "@eeacms/volto-matomo": "4.2.1",
-    "@kitconcept/volto-button-block": "^2.3.1",
-    "@kitconcept/volto-dsgvo-banner": "^2.3.2",
-    "@kitconcept/volto-heading-block": "^2.4.0",
-    "@kitconcept/volto-highlight-block": "^3.0.1",
-    "@kitconcept/volto-introduction-block": "^1.0.0",
-    "@kitconcept/volto-light-theme": "3.3.1",
-    "@kitconcept/volto-separator-block": "^4.1.1",
-    "@kitconcept/volto-slider-block": "^6.3.1",
+    "@kitconcept/volto-light-theme": "6.0.0-alpha.5",
     "@plone/components": "workspace:*",
     "@plonegovbr/volto-code-block": "2.3.0",
     "classnames": "2.2.6",

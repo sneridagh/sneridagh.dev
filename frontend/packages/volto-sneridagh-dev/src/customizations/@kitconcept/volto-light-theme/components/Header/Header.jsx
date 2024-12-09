@@ -22,18 +22,6 @@ const Header = (props) => {
     <header className="header-wrapper">
       <Container layout>
         <div className="header">
-          <div className="logo-nav-wrapper">
-            <div className="logo">
-              <Logo />
-            </div>
-            <Navigation pathname={pathname} />
-            <MobileNavigation pathname={pathname} />
-            <div className="search-wrapper navigation-desktop">
-              <div className="search">
-                <SearchWidget />
-              </div>
-            </div>
-          </div>
           <div className="tools-wrapper">
             <LanguageSelector />
 
@@ -45,6 +33,18 @@ const Header = (props) => {
               </Link>
               <a href="https://github.com/sneridagh">GitHub</a>
               <a href="https://x.com/sneridagh">X</a>
+            </div>
+          </div>
+          <div className="logo-nav-wrapper">
+            <div className="logo">
+              <Logo />
+            </div>
+            <Navigation pathname={pathname} />
+            <MobileNavigation pathname={pathname} />
+            <div className="search-wrapper navigation-desktop">
+              <div className="search">
+                <SearchWidget />
+              </div>
             </div>
           </div>
         </div>

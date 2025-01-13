@@ -45,6 +45,9 @@ export async function loader({ params, request }: LoaderArgs) {
   const { getContentQuery } = ploneClient as PloneClient;
 
   const path = flattenToAppURL(request.url);
+  console.log('request', request);
+  console.log('pathname', new URL(request.url).pathname);
+
   if (
     !(
       /^https?:\/\//.test(path) ||

@@ -16,13 +16,14 @@ defaults:
     working-directory: ./frontend
 
 jobs:
-
   meta:
     runs-on: ubuntu-latest
     outputs:
       BASE_TAG: ${{ steps.vars.outputs.BASE_TAG }}
       VOLTO_VERSION: ${{ steps.vars.outputs.VOLTO_VERSION }}
       PLONE_VERSION: ${{ steps.vars.outputs.PLONE_VERSION }}
+      rr7: ${{ steps.filter.outputs.rr7 }}
+      volto: ${{ steps.filter.outputs.volto }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,8 +37,20 @@ jobs:
           echo "BASE_TAG=${{ steps.vars.outputs.BASE_TAG }}"
           echo "VOLTO_VERSION=${{ steps.vars.outputs.VOLTO_VERSION }}"
 
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            rr7:
+              - 'frontend/rr7/**'
+            volto:
+              - 'frontend/**'
+              - '!frontend/rr7/**'
+
   code-analysis:
     runs-on: ubuntu-latest
+    needs: meta
+    if: ${{ needs.meta.outputs.volto == 'true' }}
     steps:
       - name: Main checkout
         uses: actions/checkout@v4
@@ -151,6 +164,7 @@ jobs:
 
       - name: Build and push (RR7)
         uses: docker/build-push-action@v4
+        if: ${{ needs.meta.outputs.rr7 == 'true' }}
         with:
           platforms: linux/amd64
           context: frontend/rr7
@@ -163,6 +177,7 @@ jobs:
 
       - name: Build and push
         uses: docker/build-push-action@v4
+        if: ${{ needs.meta.outputs.volto == 'true' }}
         with:
           platforms: linux/amd64
           context: frontend/

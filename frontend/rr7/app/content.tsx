@@ -55,8 +55,11 @@ export async function loader({ params, request }: LoaderArgs) {
       /^\/assets/.test(path)
     )
   ) {
+    console.log('prefetching', path);
     await queryClient.prefetchQuery(getContentQuery({ path, expand }));
   }
+  console.log('ploneClient', ploneClient.config);
+  console.log('path', path);
   console.log('dehydrate', dehydrate(queryClient));
   return { dehydratedState: dehydrate(queryClient) };
 }

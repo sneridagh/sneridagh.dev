@@ -62,6 +62,7 @@ export async function loader({ params, request }: LoaderArgs) {
 
   console.log('path', path);
   console.log('dehydrate', dehydrate(queryClient));
+  console.log('a change');
   return { dehydratedState: dehydrate(queryClient) };
 }
 

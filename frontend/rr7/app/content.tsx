@@ -44,9 +44,7 @@ export async function loader({ params, request }: LoaderArgs) {
 
   const { getContentQuery } = ploneClient as PloneClient;
 
-  const path = flattenToAppURL(request.url);
-  console.log('request', request);
-  console.log('pathname', new URL(request.url).pathname);
+  const path = new URL(request.url).pathname;
 
   if (
     !(
@@ -61,7 +59,7 @@ export async function loader({ params, request }: LoaderArgs) {
     console.log('prefetching', path);
     await queryClient.prefetchQuery(getContentQuery({ path, expand }));
   }
-  console.log('ploneClient', ploneClient.config);
+
   console.log('path', path);
   console.log('dehydrate', dehydrate(queryClient));
   return { dehydratedState: dehydrate(queryClient) };

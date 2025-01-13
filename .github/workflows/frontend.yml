@@ -44,7 +44,7 @@ jobs:
             rr7:
               - 'frontend/rr7/**'
             volto:
-              - 'frontend/!(**/rr7/**)'
+              - 'frontend/!(rr7)/**'
 
   code-analysis:
     runs-on: ubuntu-latest

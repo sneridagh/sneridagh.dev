@@ -7,7 +7,7 @@ services:
     image: ghcr.io/sneridagh/sneridagh-dev-rr7-frontend:${STACK_PARAM:-latest}
     environment:
       PLONE_API_PATH: https://rr7.sneridagh.dev
-      PLONE_INTERNAL_API_PATH: http://backend:8080/Plone
+      PLONE_INTERNAL_API_PATH: http://sneridagh-dev_backend:8080/Plone
       DEBUG: axios
     depends_on:
       - backend

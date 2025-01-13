@@ -49,7 +49,6 @@ jobs:
   code-analysis:
     runs-on: ubuntu-latest
     needs: meta
-    if: ${{ needs.meta.outputs.volto == 'true' }}
     steps:
       - name: Main checkout
         uses: actions/checkout@v4

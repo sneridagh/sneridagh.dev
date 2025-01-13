@@ -57,7 +57,7 @@ export async function loader({ params, request }: LoaderArgs) {
   ) {
     await queryClient.prefetchQuery(getContentQuery({ path, expand }));
   }
-
+  console.log('dehydrate', dehydrate(queryClient));
   return { dehydratedState: dehydrate(queryClient) };
 }
 
@@ -65,6 +65,10 @@ function Page() {
   const { getContentQuery } = usePloneClient();
   const pathname = useLocation().pathname;
   const { data } = useQuery(getContentQuery({ path: pathname, expand }));
+  const theData = useQueryClient().getQueryData(
+    getContentQuery({ path: pathname, expand }),
+  );
+  console.log('data in client', theData);
 
   if (!data) return 'Loading...';
   return <App content={data} location={{ pathname: '/' }} />;

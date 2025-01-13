@@ -1,14 +1,13 @@
 # syntax=docker/dockerfile:1
 ARG VOLTO_VERSION
-FROM plone/frontend-builder:${VOLTO_VERSION:-18.1.0} AS builder
+FROM plone/frontend-builder:${VOLTO_VERSION:-18.5.0} AS builder
 
 COPY --chown=node . /app/rr7
-COPY --chown=node ./pnpm-workspace-rr7.yaml /app/pnpm-workspace.yaml
+COPY --chown=node ./pnpm-workspace.yaml /app/pnpm-workspace.yaml
 
 RUN --mount=type=cache,id=pnpm,target=/app/.pnpm-store,uid=1000 <<EOT
-    (cd core && git fetch --depth 1 origin slots-base:slots-base && git checkout slots-base)
+    # (cd core && git fetch --depth 1 origin slots-base:slots-base && git checkout slots-base)
     pnpm install && pnpm build:deps
-    echo "asd"
     pnpm --filter @plone/client build && pnpm --filter @plone/providers build
 EOT
 

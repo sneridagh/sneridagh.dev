@@ -7,8 +7,8 @@ on:
 env:
   IMAGE_NAME_PREFIX: ghcr.io/sneridagh/sneridagh-dev
   IMAGE_NAME_SUFFIX: frontend
-  RR7_IMAGE_NAME_PREFIX: ghcr.io/sneridagh/sneridagh-dev-rr7
-  RR7_IMAGE_NAME_SUFFIX: frontend
+  SEVEN_IMAGE_NAME_PREFIX: ghcr.io/sneridagh/sneridagh-dev-seven
+  SEVEN_IMAGE_NAME_SUFFIX: frontend
   NODE_VERSION: 22.x
 
 defaults:
@@ -16,13 +16,13 @@ defaults:
     working-directory: ./frontend
 
 jobs:
-  meta:
+  config:
     runs-on: ubuntu-latest
     outputs:
       BASE_TAG: ${{ steps.vars.outputs.BASE_TAG }}
       VOLTO_VERSION: ${{ steps.vars.outputs.VOLTO_VERSION }}
       PLONE_VERSION: ${{ steps.vars.outputs.PLONE_VERSION }}
-      rr7: ${{ steps.filter.outputs.rr7 }}
+      seven: ${{ steps.filter.outputs.seven }}
       volto: ${{ steps.filter.outputs.volto }}
     steps:
       - name: Checkout
@@ -41,14 +41,15 @@ jobs:
         id: filter
         with:
           filters: |
-            rr7:
-              - 'frontend/rr7/**'
+            seven:
+              - 'frontend/packages/seven-sneridagh-dev/**'
+              - 'frontend/mrs.developer.json'
             volto:
-              - 'frontend/!(rr7)/**'
+              - 'frontend/!(packages/seven-sneridagh-dev)/**'
 
   code-analysis:
     runs-on: ubuntu-latest
-    needs: meta
+    needs: config
     steps:
       - name: Main checkout
         uses: actions/checkout@v4
@@ -106,7 +107,7 @@ jobs:
   release:
     runs-on: ubuntu-latest
     needs:
-      - meta
+      - config
       - code-analysis
     permissions:
       contents: read
@@ -133,13 +134,13 @@ jobs:
             type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Docker config
-        id: config-rr7
+        id: seven
         uses: docker/metadata-action@v5
         with:
           images: |
-            ${{ env.RR7_IMAGE_NAME_PREFIX }}-${{ env.RR7_IMAGE_NAME_SUFFIX }}
+            ${{ env.SEVEN_IMAGE_NAME_PREFIX }}-${{ env.SEVEN_IMAGE_NAME_SUFFIX }}
           labels: |
-            org.label-schema.docker.cmd=docker run -d -p 3000:3000 ${{ env.RR7_IMAGE_NAME_PREFIX }}-${{ env.RR7_IMAGE_NAME_SUFFIX }}:latest
+            org.label-schema.docker.cmd=docker run -d -p 3000:3000 ${{ env.SEVEN_IMAGE_NAME_PREFIX }}-${{ env.SEVEN_IMAGE_NAME_SUFFIX }}:latest
           flavor:
             latest=false
           tags: |
@@ -160,22 +161,22 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push (RR7)
+      - name: Build and push (Seven)
         uses: docker/build-push-action@v4
-        if: ${{ needs.meta.outputs.rr7 == 'true' }}
+        if: ${{ needs.config.outputs.seven == 'true' }}
         with:
           platforms: linux/amd64
-          context: frontend/rr7
-          file: frontend/rr7/Dockerfile
+          context: frontend/
+          file: frontend/Dockerfile.seven
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.config-rr7.outputs.tags }}
-          labels: $${{ steps.config-rr7.outputs.labels }}
+          tags: ${{ steps.seven.outputs.tags }}
+          labels: $${{ steps.seven.outputs.labels }}
           build-args: |
-            VOLTO_VERSION=${{ needs.meta.outputs.VOLTO_VERSION }}
+            VOLTO_VERSION=${{ needs.config.outputs.VOLTO_VERSION }}
 
       - name: Build and push
         uses: docker/build-push-action@v4
-        if: ${{ needs.meta.outputs.volto == 'true' }}
+        if: ${{ needs.config.outputs.volto == 'true' }}
         with:
           platforms: linux/amd64
           context: frontend/
@@ -184,4 +185,4 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: $${{ steps.meta.outputs.labels }}
           build-args: |
-            VOLTO_VERSION=${{ needs.meta.outputs.VOLTO_VERSION }}
+            VOLTO_VERSION=${{ needs.config.outputs.VOLTO_VERSION }}

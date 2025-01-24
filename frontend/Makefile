@@ -53,8 +53,20 @@ core/packages/registry/dist: $(shell find core/packages/registry/src -type f)
 core/packages/components/dist: $(shell find core/packages/components/src -type f)
 	pnpm --filter @plone/components build
 
+core/packages/client/dist: $(shell find core/packages/client/src -type f)
+	pnpm --filter @plone/client build
+
+core/packages/providers/dist: $(shell find core/packages/providers/src -type f)
+	pnpm --filter @plone/providers build
+
+core/packages/helpers/dist: $(shell find core/packages/helpers/src -type f)
+	pnpm --filter @plone/helpers build
+
+core/packages/react-router/dist: $(shell find core/packages/react-router/src -type f)
+	pnpm --filter @plone/react-router build
+
 .PHONY: build-deps
-build-deps: core/packages/registry/dist core/packages/components/dist ## Build dependencies
+build-deps: core/packages/registry/dist core/packages/components/dist core/packages/client/dist core/packages/providers/dist core/packages/react-router/dist core/packages/helpers/dist ## Build dependencies
 
 .PHONY: i18n
 i18n: ## Sync i18n

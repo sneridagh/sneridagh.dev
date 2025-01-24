@@ -7,7 +7,7 @@ SHELL:=bash
 .DELETE_ON_ERROR:
 MAKEFLAGS+=--warn-undefined-variables
 MAKEFLAGS+=--no-builtin-rules
-IMAGE_NAME=ghcr.io/sneridagh/sneridagh-dev-rr7-frontend
+IMAGE_NAME=ghcr.io/sneridagh/sneridagh-dev-seven-frontend
 IMAGE_TAG=latest
 VOLTO_VERSION = $(shell cat ../mrs.developer.json | python -c "import sys, json; print(json.load(sys.stdin)['core']['tag'])")
 CURRENT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))

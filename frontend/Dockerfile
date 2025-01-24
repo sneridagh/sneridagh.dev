@@ -2,6 +2,7 @@
 ARG VOLTO_VERSION
 FROM plone/frontend-builder:${VOLTO_VERSION:-18.1.0} as builder
 
+COPY --chown=node packages/seven-sneridagh-dev /app/packages/seven-sneridagh-dev
 COPY --chown=node packages/volto-sneridagh-dev /app/packages/volto-sneridagh-dev
 COPY --chown=node volto.config.js /app/
 COPY --chown=node package.json /app/package.json.temp

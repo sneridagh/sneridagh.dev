@@ -1,0 +1,16 @@
+{
+  "name": "seven-sneridagh-dev",
+  "version": "1.0.0",
+  "description": "seven-sneridagh-dev: Volto add-on",
+  "main": "index.ts",
+  "devDependencies": {
+    "@plone/types": "workspace:*",
+    "@plone/registry": "workspace:*",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0"
+  },
+  "peerDependencies": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
+}

@@ -15,7 +15,9 @@
     "preinstall": "npx only-allow pnpm",
     "start": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto start",
     "start:prod": "pnpm --filter @plone/volto start:prod",
+    "start:prod:seven": "pnpm --filter seven start:prod",
     "build": "VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto build",
+    "build:seven": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter seven build",
     "build:deps": "pnpm --filter @plone/registry --filter @plone/components build",
     "i18n": "pnpm --filter volto-sneridagh-dev i18n",
     "test": "RAZZLE_JEST_CONFIG=$(pwd)/jest-addon.config.js pnpm --filter @plone/volto test -- --passWithNoTests",
@@ -30,12 +32,15 @@
     "release-major-alpha": "pnpm --filter volto-addon release-major-alpha",
     "release-alpha": "pnpm --filter volto-addon release-alpha",
     "storybook": "pnpm build:deps && VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto storybook dev -p 6006 -c $(pwd)/.storybook",
-    "build-storybook": "pnpm build:deps && VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto build-storybook -c $(pwd)/.storybook"
+    "build-storybook": "pnpm build:deps && VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto build-storybook -c $(pwd)/.storybook",
+    "seven": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter seven dev"
   },
   "dependencies": {
     "@plone/volto": "workspace:*",
     "@plone/registry": "workspace:*",
-    "volto-sneridagh-dev": "workspace:*"
+    "volto-sneridagh-dev": "workspace:*",
+    "seven": "workspace:*",
+    "seven-sneridagh-dev": "workspace:*"
   },
   "devDependencies": {
     "mrs-developer": "^2.3.0"

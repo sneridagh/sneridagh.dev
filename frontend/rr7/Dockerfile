@@ -19,7 +19,7 @@ EOT
 FROM node:22-slim
 
 LABEL maintainer="Victor Fernandez de Alba <sneridagh@gmail.com>" \
-      org.label-schema.name="sneridagh-dev-rr7-frontend" \
+      org.label-schema.name="sneridagh-dev-seven-frontend" \
       org.label-schema.description="sneridagh.dev RR7 frontend image" \
       org.label-schema.vendor="Victor Fernandez de Alba"
 

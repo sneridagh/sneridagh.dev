@@ -44,8 +44,7 @@ services:
         - traefik.http.routers.rt-frontend-rr7.entrypoints=https
         - traefik.http.routers.rt-frontend-rr7.tls=true
         - traefik.http.routers.rt-frontend-rr7.tls.certresolver=le
-        - traefik.http.routers.rt-frontend-rr7.service=svc-frontend-seven
-        - traefik.http.routers.rt-frontend-rr7.middlewares=gzip,mw-redirect-rr7-to-seven
+        - traefik.http.routers.rt-frontend-rr7.middlewares=mw-redirect-rr7-to-seven
         - traefik.http.routers.rt-frontend-rr7.priority=1
 
 

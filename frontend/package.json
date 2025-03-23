@@ -38,9 +38,7 @@
   "dependencies": {
     "@plone/volto": "workspace:*",
     "@plone/registry": "workspace:*",
-    "volto-sneridagh-dev": "workspace:*",
-    "seven": "workspace:*",
-    "seven-sneridagh-dev": "workspace:*"
+    "volto-sneridagh-dev": "workspace:*"
   },
   "devDependencies": {
     "mrs-developer": "^2.3.0"

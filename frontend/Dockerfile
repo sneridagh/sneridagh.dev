@@ -1,8 +1,7 @@
 # syntax=docker/dockerfile:1
 ARG VOLTO_VERSION
-FROM plone/frontend-builder:${VOLTO_VERSION:-18.1.0} as builder
+FROM plone/frontend-builder:${VOLTO_VERSION:-18.10.0} as builder
 
-COPY --chown=node packages/seven-sneridagh-dev /app/packages/seven-sneridagh-dev
 COPY --chown=node packages/volto-sneridagh-dev /app/packages/volto-sneridagh-dev
 COPY --chown=node volto.config.js /app/
 COPY --chown=node package.json /app/package.json.temp
@@ -14,7 +13,7 @@ RUN --mount=type=cache,id=pnpm,target=/app/.pnpm-store,uid=1000 <<EOT
      pnpm install --prod
 EOT
 
-FROM plone/frontend-prod-config:${VOLTO_VERSION:-18.1.0}
+FROM plone/frontend-prod-config:${VOLTO_VERSION:-18.10.0}
 
 LABEL maintainer="Victor Fernandez de Alba <sneridagh@gmail.com>" \
       org.label-schema.name="sneridagh-dev-frontend" \

@@ -166,8 +166,8 @@ jobs:
         if: ${{ needs.config.outputs.seven == 'true' }}
         with:
           platforms: linux/amd64
-          context: frontend/
-          file: frontend/Dockerfile.seven
+          context: seven/
+          file: seven/Dockerfile
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.seven.outputs.tags }}
           labels: $${{ steps.seven.outputs.labels }}

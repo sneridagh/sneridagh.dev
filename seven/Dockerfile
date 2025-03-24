@@ -11,7 +11,8 @@ COPY --chown=node package.json /app/package.json.temp
 RUN --mount=type=cache,id=pnpm,target=/app/.pnpm-store,uid=1000 <<EOT
     set -e
     python3 -c "import json; data = json.load(open('package.json.temp')); deps = data['dependencies']; data['dependencies'].update(deps); json.dump(data, open('package.json', 'w'), indent=2)"
-    (cd core && git fetch --depth 1 origin 7:7 && git checkout 7)
+    # (cd core && git fetch --depth 1 origin 7:7 && git checkout 7)
+    (cd core && git fetch --depth 1 origin debugloaderhttps:debugloaderhttps && git checkout debugloaderhttps)
     pnpm install && make build-deps
     pnpm build
     pnpm install --prod

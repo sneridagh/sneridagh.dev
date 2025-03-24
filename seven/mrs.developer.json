@@ -4,7 +4,7 @@
     "package": "@plone/volto",
     "url": "git@github.com:plone/volto.git",
     "https": "https://github.com/plone/volto.git",
-    "branch": "7",
+    "branch": "debugloaderhttps",
     "filterBlobs": true
   }
 }

@@ -20,6 +20,7 @@ jobs:
       STACK_NAME: ${{ steps.vars.outputs.STACK_NAME }}
       backend: ${{ steps.filter.outputs.backend }}
       frontend: ${{ steps.filter.outputs.frontend }}
+      seven: ${{ steps.filter.outputs.seven }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -56,7 +57,7 @@ jobs:
   frontend:
     uses: ./.github/workflows/frontend.yml
     needs: config
-    if: ${{ needs.config.outputs.frontend == 'true' }}
+    if: ${{ needs.config.outputs.frontend == 'true' || needs.config.outputs.seven == 'true' }}
     permissions:
       contents: read
       packages: write

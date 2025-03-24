@@ -9,6 +9,7 @@ on:
       - ".github/workflows/frontend.yml"
       - ".github/workflows/main.yml"
       - "devops/**"
+      - "mrs.developer.json"
   workflow_dispatch:
 
 jobs:
@@ -40,6 +41,7 @@ jobs:
             frontend:
               - 'frontend/**'
               - '.github/workflows/frontend.yml'
+              - 'mrs.developer.json'
 
   backend:
     uses: ./.github/workflows/backend.yml

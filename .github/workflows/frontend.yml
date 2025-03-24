@@ -42,10 +42,9 @@ jobs:
         with:
           filters: |
             seven:
-              - 'frontend/packages/seven-sneridagh-dev/**'
-              - 'frontend/mrs.developer.json'
+              - 'seven/**'
             volto:
-              - 'frontend/!(packages/seven-sneridagh-dev)/**'
+              - 'frontend/**'
 
   code-analysis:
     runs-on: ubuntu-latest

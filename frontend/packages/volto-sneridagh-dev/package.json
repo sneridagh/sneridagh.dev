@@ -1,6 +1,6 @@
 {
   "name": "volto-sneridagh-dev",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "volto-sneridagh-dev: Volto add-on",
   "main": "src/index.ts",
   "license": "MIT",

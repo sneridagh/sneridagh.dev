@@ -1,6 +1,0 @@
-graft src/sneridagh_dev
-graft docs
-include *.rst
-include *.md
-include *.cfg
-global-exclude *.pyc

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<metadata>
-  <version>2</version>
-  <dependencies>
-    <dependency>profile-plone.volto:default</dependency>
-    <dependency>profile-collective.blog:default</dependency>
-  </dependencies>
-</metadata>

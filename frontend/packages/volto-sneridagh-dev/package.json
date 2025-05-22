@@ -35,10 +35,10 @@
   },
   "dependencies": {
     "@eeacms/volto-matomo": "4.2.1",
-    "@kitconcept/volto-light-theme": "6.0.0-alpha.5",
+    "@kitconcept/volto-light-theme": "6.1.0",
     "@plone/components": "workspace:*",
     "@plonegovbr/volto-code-block": "2.3.0",
-    "classnames": "2.2.6",
+    "classnames": "2.5.1",
     "volto-rss-provider": "^1.0.0"
   },
   "devDependencies": {

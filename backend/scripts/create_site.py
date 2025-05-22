@@ -1,7 +1,8 @@
 from AccessControl.SecurityManagement import newSecurityManager
 from Products.CMFPlone.factory import _DEFAULT_PROFILE
 from Products.CMFPlone.factory import addPloneSite
-from sneridagh_dev.interfaces import ISneridaghDevLayer
+from Products.GenericSetup.tool import SetupTool
+from sneridagh_dev.interfaces import IBrowserLayer
 from Testing.makerequest import makerequest
 from zope.interface import directlyProvidedBy
 from zope.interface import directlyProvides
@@ -26,14 +27,17 @@ def asbool(s):
 
 
 DELETE_EXISTING = asbool(os.getenv("DELETE_EXISTING"))
+EXAMPLE_CONTENT = asbool(
+    os.getenv("EXAMPLE_CONTENT", "1")
+)  # Create example content by default
 
-app = makerequest(app)  # noQA
+app = makerequest(globals()["app"])
 
 request = app.REQUEST
 
-ifaces = [
-    ISneridaghDevLayer,
-] + list(directlyProvidedBy(request))
+ifaces = [IBrowserLayer]
+for iface in directlyProvidedBy(request):
+    ifaces.append(iface)
 
 directlyProvides(request, *ifaces)
 
@@ -43,15 +47,12 @@ newSecurityManager(None, admin)
 
 site_id = "Plone"
 payload = {
-    "title": "sneridagh.dev",
+    "title": "Project Title",
     "profile_id": _DEFAULT_PROFILE,
-    "extension_ids": [
-        "sneridagh_dev:default",
-        "sneridagh_dev:initial",
-    ],
+    "distribution_name": "volto",
     "setup_content": False,
     "default_language": "en",
-    "portal_timezone": "America/Sao_Paulo",
+    "portal_timezone": "UTC",
 }
 
 if site_id in app.objectIds() and DELETE_EXISTING:
@@ -62,4 +63,12 @@ if site_id in app.objectIds() and DELETE_EXISTING:
 if site_id not in app.objectIds():
     site = addPloneSite(app, site_id, **payload)
     transaction.commit()
+
+    portal_setup: SetupTool = site.portal_setup
+    portal_setup.runAllImportStepsFromProfile("profile-sneridagh_dev:default")
+    transaction.commit()
+
+    if EXAMPLE_CONTENT:
+        portal_setup.runAllImportStepsFromProfile("profile-sneridagh_dev:initial")
+        transaction.commit()
     app._p_jar.sync()

@@ -12,6 +12,11 @@ on:
       - "devops/**"
   workflow_dispatch:
 
+env:
+  IMAGE_NAME_PREFIX: ghcr.io/collective/sneridagh-dev
+  NODE_VERSION: "22.x"
+  PYTHON_VERSION: "3.12"
+
 jobs:
   config:
     runs-on: ubuntu-latest
@@ -21,16 +26,25 @@ jobs:
       backend: ${{ steps.filter.outputs.backend }}
       frontend: ${{ steps.filter.outputs.frontend }}
       seven: ${{ steps.filter.outputs.seven }}
+      BASE_TAG: ${{ steps.vars.outputs.BASE_TAG }}
+      IMAGE_NAME_PREFIX: ${{ env.IMAGE_NAME_PREFIX }}
+      NODE_VERSION: ${{ env.NODE_VERSION }}
+      PYTHON_VERSION: ${{ env.PYTHON_VERSION }}
+      PLONE_VERSION: ${{ steps.vars.outputs.PLONE_VERSION }}
+      VOLTO_VERSION: ${{ steps.vars.outputs.VOLTO_VERSION }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set Env Vars
+      - name: Compute several vars needed for the CI
         id: vars
         run: |
           ENVIRONMENT=${{ vars.LIVE_ENV }}
           echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_OUTPUT
           echo "STACK_NAME=${ENVIRONMENT//./-}" >> $GITHUB_OUTPUT
+          echo "BASE_TAG=sha-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+          echo "PLONE_VERSION=$(cat backend/version.txt)" >> $GITHUB_OUTPUT
+          python3 -c 'import json; data = json.load(open("./frontend/mrs.developer.json")); print("VOLTO_VERSION=" + (data["core"].get("tag") or "latest"))' >> $GITHUB_OUTPUT
 
       - uses: dorny/paths-filter@v3
         id: filter
@@ -46,9 +60,25 @@ jobs:
               - 'seven/**'
               - '.github/workflows/frontend.yml'
 
+      - name: Test vars
+        run: |
+          echo 'BASE_TAG=${{ steps.vars.outputs.BASE_TAG }}'
+          echo 'PLONE_VERSION=${{ steps.vars.outputs.PLONE_VERSION }}'
+          echo 'VOLTO_VERSION=${{ steps.vars.outputs.VOLTO_VERSION }}'
+          echo 'backend: ${{ steps.filter.outputs.backend }}'
+          echo 'docs: ${{ steps.filter.outputs.docs }}'
+          echo 'frontend: ${{ steps.filter.outputs.frontend }}'
+
   backend:
     uses: ./.github/workflows/backend.yml
-    needs: config
+    needs:
+        - config
+    with:
+        base-tag: ${{ needs.config.outputs.BASE_TAG }}
+        image-name-prefix: ${{ needs.config.outputs.IMAGE_NAME_PREFIX }}
+        image-name-suffix: backend
+        python-version: ${{ needs.config.outputs.PYTHON_VERSION }}
+        plone-version: ${{ needs.config.outputs.PLONE_VERSION }}
     if: ${{ needs.config.outputs.backend == 'true' }}
     permissions:
       contents: read

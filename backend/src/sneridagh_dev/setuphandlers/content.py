@@ -47,14 +47,14 @@ def _create_content(portal, item: dict, creators: list):
     attributes = item.get("_attributes", {})
     payload = {k: v for k, v in item.items() if not k.startswith("_")}
     payload["container"] = container
-    image_path = item.get("_image", None)
+    image_path = item.get("_image")
     if image_path:
         payload["image"] = _get_image(image_path)
-    date_keys = [k for k in payload.keys() if k.endswith("_date")]
+    date_keys = [k for k in payload if k.endswith("_date")]
     for key in date_keys:
         payload[key] = date_from_string(payload[key])
 
-    modified = payload.get("modification_date", None)
+    modified = payload.get("modification_date")
     content = api.content.create(**payload)
     # Apply attributes
     if attributes:
@@ -77,7 +77,7 @@ def _create_content(portal, item: dict, creators: list):
 
 def populate_portal(portal, creators):
     """Create content structure."""
-    with open(os.path.join(__location__, "contents.json"), "r") as f_in:
+    with open(os.path.join(__location__, "contents.json")) as f_in:
         contents = json.load(f_in)
 
     # Contents are created by Editors
@@ -99,7 +99,7 @@ def _update_home(portal, item: dict):
 
 def update_home(portal, creators):
     """Create content structure."""
-    with open(os.path.join(__location__, "home.json"), "r") as f_in:
+    with open(os.path.join(__location__, "home.json")) as f_in:
         content = json.load(f_in)
 
     # Contents are created by Editors

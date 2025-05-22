@@ -1,10 +1,7 @@
 <configure xmlns="http://namespaces.zope.org/zope">
 
   <!-- Indexers/Metadata -->
-  <!--
-  <adapter
-      factory=".indexer.industry_indexer"
-      name="industry"
-      />
--->
+
+  <!-- -*- extra stuff goes here -*- -->
+
 </configure>

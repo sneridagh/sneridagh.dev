@@ -3,15 +3,19 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     >
 
-  <!-- <genericsetup:upgradeSteps
+  <!-- Example upgrade step
+  <genericsetup:upgradeSteps
       profile="sneridagh_dev:default"
-      source="20231031001"
-      destination="2"
+      source="1000"
+      destination="1001"
       >
     <genericsetup:upgradeDepends
-        title="Add BlogPost content types"
-        import_steps="typeinfo"
+        title="Update registry value"
+        import_steps="plone.app.registry"
         />
-  </genericsetup:upgradeSteps> -->
+  </genericsetup:upgradeSteps>
+  -->
+
+  <!-- -*- extra stuff goes here -*- -->
 
 </configure>

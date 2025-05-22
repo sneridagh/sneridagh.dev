@@ -1,10 +1,5 @@
 <configure xmlns="http://namespaces.zope.org/zope">
 
-  <!-- Example vocabulary
-  <utility
-      name="sneridagh_dev.vocabulary.vocabulary"
-      component=".industries_vocabulary"
-      />
-   -->
+  <!-- -*- extra stuff goes here -*- -->
 
 </configure>

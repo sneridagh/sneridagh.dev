@@ -14,6 +14,6 @@ class TestSetupUninstall:
 
     def test_browserlayer_not_registered(self, browser_layers):
         """Test that IBrowserLayer is not registered."""
-        from sneridagh_dev.interfaces import IBrowserLayer
+        from sneridagh_dev.interfaces import ISneridaghDevLayer
 
-        assert IBrowserLayer not in browser_layers
+        assert ISneridaghDevLayer not in browser_layers

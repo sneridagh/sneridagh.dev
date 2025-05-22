@@ -10,7 +10,6 @@ import sneridagh_dev
 
 
 class Layer(PloneSandboxLayer):
-
     defaultBases = (PLONE_APP_CONTENTTYPES_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
@@ -24,11 +23,9 @@ class Layer(PloneSandboxLayer):
 
     def setUpPloneSite(self, portal):
         applyProfile(portal, "sneridagh_dev:default")
-        applyProfile(portal, "sneridagh_dev:initial")
 
 
 FIXTURE = Layer()
-
 
 INTEGRATION_TESTING = IntegrationTesting(
     bases=(FIXTURE,),

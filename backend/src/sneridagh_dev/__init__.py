@@ -9,6 +9,6 @@ __version__ = "1.0.0a1"
 
 PACKAGE_NAME = "sneridagh_dev"
 
-_ = MessageFactory("sneridagh_dev")
+_ = MessageFactory(PACKAGE_NAME)
 
-logger = logging.getLogger("sneridagh_dev")
+logger = logging.getLogger(PACKAGE_NAME)

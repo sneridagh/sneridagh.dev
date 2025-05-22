@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
 
 env:
-  IMAGE_NAME_PREFIX: ghcr.io/collective/sneridagh-dev
+  IMAGE_NAME_PREFIX: ghcr.io/sneridagh/sneridagh-dev
   NODE_VERSION: "22.x"
   PYTHON_VERSION: "3.12"
 

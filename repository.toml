@@ -1,0 +1,37 @@
+[repository]
+name = "sneridagh.dev"
+managed_by_uv = false
+changelog = "CHANGELOG.md"
+version = "version.txt"
+compose = "docker-compose.yml"
+
+[repository.towncrier]
+section = "Project"
+settings = "towncrier.toml"
+
+[backend]
+path = "backend"
+
+[backend.package]
+name = "project.title"
+path = "backend"
+changelog = "backend/CHANGELOG.md"
+towncrier_settings = "backend/pyproject.toml"
+base_package = "Products.CMFPlone"
+publish = false
+
+[frontend]
+path = "frontend"
+
+[frontend.package]
+name = "volto-sneridagh-dev"
+path = "frontend/packages/volto-sneridagh-dev"
+changelog = "frontend/packages/volto-sneridagh-dev/CHANGELOG.md"
+towncrier_settings = "frontend/packages/volto-sneridagh-dev/towncrier.toml"
+base_package = "@plone/volto"
+publish = false
+
+[cookieplone]
+template = "project"
+template_version = "684d5c7f43a6ebc3184e2a0106b0160820a96e66"
+generated_date = "2025-05-22 10:51:40"

@@ -7,10 +7,10 @@ class TestSetupInstall:
         assert installer.is_product_installed(PACKAGE_NAME) is True
 
     def test_browserlayer(self, browser_layers):
-        """Test that ISneridaghDevLayer is registered."""
-        from sneridagh_dev.interfaces import ISneridaghDevLayer
+        """Test that IBrowserLayer is registered."""
+        from sneridagh_dev.interfaces import IBrowserLayer
 
-        assert ISneridaghDevLayer in browser_layers
+        assert IBrowserLayer in browser_layers
 
     def test_latest_version(self, profile_last_version):
         """Test latest version of default profile."""

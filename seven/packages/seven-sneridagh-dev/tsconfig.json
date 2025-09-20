@@ -12,9 +12,11 @@
     "noEmit": true,
     "lib": ["es2022", "dom", "dom.iterable"],
     "jsx": "react-jsx",
-    "paths": {}
+    "paths": {
+      "seven-sneridagh-dev/*": ["./src/*"]
+    }
   },
-  "include": ["*.ts", "*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": [
     "node_modules",
     "build",

@@ -1,4 +1,4 @@
-import { addons } from 'seven/registry-publicui.config';
+import { addons } from 'seven/registry.config';
 
 addons.push('seven-sneridagh-dev');
 const theme = '';

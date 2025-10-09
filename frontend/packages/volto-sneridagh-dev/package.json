@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "@eeacms/volto-matomo": "4.2.1",
-    "@kitconcept/volto-light-theme": "6.1.0",
+    "@kitconcept/volto-light-theme": "7.3.0",
     "@plone/components": "workspace:*",
     "@plonegovbr/volto-code-block": "2.3.0",
     "classnames": "2.5.1",

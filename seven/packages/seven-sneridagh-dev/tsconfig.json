@@ -13,7 +13,7 @@
     "lib": ["es2022", "dom", "dom.iterable"],
     "jsx": "react-jsx",
     "paths": {
-      "seven-sneridagh-dev/*": ["./src/*"]
+      "seven-sneridagh-dev/*": ["./*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],

@@ -59,7 +59,6 @@ const applyConfig = (config: ConfigType) => {
   config.blocks.blocksConfig.codeBlock.defaultLanguage = 'tsx';
   config.blocks.blocksConfig.codeBlock.defaultStyle = 'dark';
 
-  config.widgets.widget.blockWidth = BlockWidthWidget;
   config.blocks.blocksConfig.codeBlock.schemaEnhancer = CodeStylingSchema;
 
   return config;

@@ -9,9 +9,16 @@ MAKEFLAGS+=--warn-undefined-variables
 MAKEFLAGS+=--no-builtin-rules
 
 CURRENT_DIR:=$(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
+GIT_FOLDER=$(CURRENT_DIR)/.git
 
-PROJECT_NAME=sneridagh-dev
+REPOSITORY_SETTINGS := $(shell uvx repoplone settings dump)
+
+PROJECT_NAME := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.name')
 STACK_NAME=sneridagh-dev
+
+VOLTO_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.frontend.volto_version')
+PLONE_VERSION := $(shell echo '$(REPOSITORY_SETTINGS)' | jq -r '.backend.base_package_version')
+
 
 # We like colors
 # From: https://coderwall.com/p/izxssa/colored-makefile-for-golang-projects
@@ -21,7 +28,7 @@ RESET=`tput sgr0`
 YELLOW=`tput setaf 3`
 
 .PHONY: all
-all: build
+all: install
 
 # Add the following 'help' target to your Makefile
 # And add help text after each target name starting with '\#\#'
@@ -29,55 +36,70 @@ all: build
 help: ## This help message
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: install-frontend
-install-frontend:  ## Install React Frontend
+.PHONY: debug-settings
+debug-settings:  ## Debug settings
+	@echo "Debug settings"
+	@echo "PROJECT_NAME: $(PROJECT_NAME)"
+	@echo "VOLTO_VERSION: $(VOLTO_VERSION)"
+	@echo "PLONE_VERSION: $(PLONE_VERSION)"
+
+###########################################
+# Frontend
+###########################################
+.PHONY: frontend-install
+frontend-install:  ## Install React Frontend
 	$(MAKE) -C "./frontend/" install
 
-.PHONY: build-frontend
-build-frontend:  ## Build React Frontend
+.PHONY: frontend-build
+frontend-build:  ## Build React Frontend
 	$(MAKE) -C "./frontend/" build
 
-.PHONY: start-frontend
-start-frontend:  ## Start React Frontend
+.PHONY: frontend-start
+frontend-start:  ## Start React Frontend
 	$(MAKE) -C "./frontend/" start
 
-.PHONY: install-backend
-install-backend:  ## Create virtualenv and install Plone
-	$(MAKE) -C "./backend/" build-dev
-	$(MAKE) create-site
+.PHONY: frontend-test
+frontend-test:  ## Test frontend codebase
+	@echo "Test frontend"
+	$(MAKE) -C "./frontend/" test
 
-.PHONY: build-backend
-build-backend:  ## Build Backend
-	$(MAKE) -C "./backend/" build-dev
+###########################################
+# Backend
+###########################################
+.PHONY: backend-install
+backend-install:  ## Create virtualenv and install Plone
+	$(MAKE) -C "./backend/" install
+	$(MAKE) backend-create-site
 
-.PHONY: create-site
-create-site: ## Create a Plone site with default content
+.PHONY: backend-build
+backend-build:  ## Build Backend
+	$(MAKE) -C "./backend/" install
+
+.PHONY: backend-create-site
+backend-create-site: ## Create a Plone site with default content
 	$(MAKE) -C "./backend/" create-site
 
-.PHONY: start-backend
-start-backend: ## Start Plone Backend
+.PHONY: backend-update-example-content
+backend-update-example-content: ## Export example content inside package
+	$(MAKE) -C "./backend/" update-example-content
+
+.PHONY: backend-start
+backend-start: ## Start Plone Backend
 	$(MAKE) -C "./backend/" start
 
+.PHONY: backend-test
+backend-test:  ## Test backend codebase
+	@echo "Test backend"
+	$(MAKE) -C "./backend/" test
+
+###########################################
+# Environment
+###########################################
 .PHONY: install
 install:  ## Install
 	@echo "Install Backend & Frontend"
-	$(MAKE) install-backend
-	$(MAKE) install-frontend
-
-# TODO production build
-
-.PHONY: build
-build:  ## Build in development mode
-	@echo "Build"
-	$(MAKE) build-backend
-	$(MAKE) install-frontend
-
-
-.PHONY: start
-start:  ## Start
-	@echo "Starting application"
-	$(MAKE) start-backend
-	$(MAKE) start-frontend
+	$(MAKE) backend-install
+	$(MAKE) frontend-install
 
 .PHONY: clean
 clean:  ## Clean installation
@@ -85,50 +107,64 @@ clean:  ## Clean installation
 	$(MAKE) -C "./backend/" clean
 	$(MAKE) -C "./frontend/" clean
 
+###########################################
+# QA
+###########################################
 .PHONY: format
 format:  ## Format codebase
-	@echo "Format codebase"
+	@echo "Format the codebase"
 	$(MAKE) -C "./backend/" format
 	$(MAKE) -C "./frontend/" format
 
+.PHONY: lint
+lint:  ## Format codebase
+	@echo "Lint the codebase"
+	$(MAKE) -C "./backend/" lint
+	$(MAKE) -C "./frontend/" lint
+
+.PHONY: check
+check:  format lint ## Lint and Format codebase
+
+###########################################
+# i18n
+###########################################
 .PHONY: i18n
 i18n:  ## Update locales
 	@echo "Update locales"
 	$(MAKE) -C "./backend/" i18n
 	$(MAKE) -C "./frontend/" i18n
 
-.PHONY: test-backend
-test-backend:  ## Test backend codebase
-	@echo "Test backend"
-	$(MAKE) -C "./backend/" test
-
-.PHONY: test-frontend
-test-frontend:  ## Test frontend codebase
-	@echo "Test frontend"
-	$(MAKE) -C "./frontend/" test
-
+###########################################
+# Testing
+###########################################
 .PHONY: test
-test:  test-backend test-frontend ## Test codebase
+test:  backend-test frontend-test ## Test codebase
 
+###########################################
+# Container images
+###########################################
 .PHONY: build-images
-build-images:  ## Build docker images
+build-images:  ## Build container images
 	@echo "Build"
 	$(MAKE) -C "./backend/" build-image
 	$(MAKE) -C "./frontend/" build-image
 
-## Docker stack
+###########################################
+# Local Stack
+###########################################
+.PHONY: stack-create-site
+stack-create-site:  ## Local Stack: Create a new site
+	@echo "Create a new site in the local Docker stack"
+	@echo "(Stack must not be running already.)"
+	VOLTO_VERSION=$(VOLTO_VERSION) PLONE_VERSION=$(PLONE_VERSION) docker compose -f docker-compose.yml run --build backend ./docker-entrypoint.sh create-site
+
 .PHONY: stack-start
 stack-start:  ## Local Stack: Start Services
 	@echo "Start local Docker stack"
-	@docker compose -f docker-compose.yml up -d --build
+	VOLTO_VERSION=$(VOLTO_VERSION) PLONE_VERSION=$(PLONE_VERSION) docker compose -f docker-compose.yml up -d --build
 	@echo "Now visit: http://sneridagh-dev.localhost"
 
-.PHONY: start-stack
-stack-create-site:  ## Local Stack: Create a new site
-	@echo "Create a new site in the local Docker stack"
-	@docker compose -f docker-compose.yml exec backend ./docker-entrypoint.sh create-site
-
-.PHONY: start-ps
+.PHONY: stack-status
 stack-status:  ## Local Stack: Check Status
 	@echo "Check the status of the local Docker stack"
 	@docker compose -f docker-compose.yml ps
@@ -143,32 +179,71 @@ stack-rm:  ## Local Stack: Remove Services and Volumes
 	@echo "Remove local Docker stack"
 	@docker compose -f docker-compose.yml down
 	@echo "Remove local volume data"
-	@docker volume rm $(STACK_NAME)_vol-site-data
+	@docker volume rm $(PROJECT_NAME)_vol-site-data
 
-## Acceptance
-.PHONY: build-acceptance-servers
-build-acceptance-servers: ## Build Acceptance Servers
-	@echo "Build acceptance backend"
-	@docker build backend -t sneridagh/sneridagh-dev-backend:acceptance -f backend/Dockerfile.acceptance
-	@echo "Build acceptance frontend"
-	@docker build frontend -t sneridagh/sneridagh-dev-frontend:acceptance -f frontend/Dockerfile
-
-.PHONY: start-acceptance-servers
-start-acceptance-servers: build-acceptance-servers ## Start Acceptance Servers
+###########################################
+# Acceptance
+###########################################
+.PHONY: acceptance-backend-start
+acceptance-backend-start:
 	@echo "Start acceptance backend"
-	@docker run --rm -p 55001:55001 --name sneridagh-dev-backend-acceptance -d sneridagh/sneridagh-dev-backend:acceptance
-	@echo "Start acceptance frontend"
-	@docker run --rm -p 3000:3000 --name sneridagh-dev-frontend-acceptance --link sneridagh-dev-backend-acceptance:backend -e RAZZLE_API_PATH=http://localhost:55001/plone -e RAZZLE_INTERNAL_API_PATH=http://backend:55001/plone -d sneridagh/sneridagh-dev-frontend:acceptance
+	$(MAKE) -C "./backend/" acceptance-backend-start
 
-.PHONY: stop-acceptance-servers
-stop-acceptance-servers: ## Stop Acceptance Servers
+.PHONY: acceptance-frontend-dev-start
+acceptance-frontend-dev-start:
+	@echo "Start acceptance frontend"
+	$(MAKE) -C "./frontend/" acceptance-frontend-dev-start
+
+.PHONY: acceptance-test
+acceptance-test:
+	@echo "Start acceptance tests in interactive mode"
+	$(MAKE) -C "./frontend/" acceptance-test
+
+# Build Docker images
+.PHONY: acceptance-frontend-image-build
+acceptance-frontend-image-build:
+	@echo "Build acceptance frontend image"
+	@docker build frontend -t collective/sneridagh-dev-frontend:acceptance -f frontend/Dockerfile --build-arg VOLTO_VERSION=$(VOLTO_VERSION)
+
+.PHONY: acceptance-backend-image-build
+acceptance-backend-image-build:
+	@echo "Build acceptance backend image"
+	@docker build backend -t collective/sneridagh-dev-backend:acceptance -f backend/Dockerfile.acceptance --build-arg PLONE_VERSION=$(PLONE_VERSION)
+
+.PHONY: acceptance-images-build
+acceptance-images-build: ## Build Acceptance frontend/backend images
+	$(MAKE) acceptance-backend-image-build
+	$(MAKE) acceptance-frontend-image-build
+
+.PHONY: acceptance-frontend-container-start
+acceptance-frontend-container-start:
+	@echo "Start acceptance frontend"
+	@docker run --rm -p 3000:3000 --name sneridagh-dev-frontend-acceptance --link sneridagh-dev-backend-acceptance:backend -e RAZZLE_API_PATH=http://localhost:55001/plone -e RAZZLE_INTERNAL_API_PATH=http://backend:55001/plone -d collective/sneridagh-dev-frontend:acceptance
+
+.PHONY: acceptance-backend-container-start
+acceptance-backend-container-start:
+	@echo "Start acceptance backend"
+	@docker run --rm -p 55001:55001 --name sneridagh-dev-backend-acceptance -d collective/sneridagh-dev-backend:acceptance
+
+.PHONY: acceptance-containers-start
+acceptance-containers-start: ## Start Acceptance containers
+	$(MAKE) acceptance-backend-container-start
+	$(MAKE) acceptance-frontend-container-start
+
+.PHONY: acceptance-containers-stop
+acceptance-containers-stop: ## Stop Acceptance containers
 	@echo "Stop acceptance containers"
 	@docker stop sneridagh-dev-frontend-acceptance
 	@docker stop sneridagh-dev-backend-acceptance
 
-.PHONY: run-acceptance-tests
-run-acceptance-tests: ## Run Acceptance tests
-	$(MAKE) start-acceptance-servers
-	npx wait-on --httpTimeout 20000 http-get://localhost:55001/plone http://localhost:3000
-	$(MAKE) -C "./frontend/" test-acceptance-headless
-	$(MAKE) stop-acceptance-servers
+.PHONY: ci-acceptance-test
+ci-acceptance-test:
+	@echo "Run acceptance tests in CI mode"
+	$(MAKE) acceptance-containers-start
+	pnpm dlx wait-on --httpTimeout 20000 http-get://localhost:55001/plone http://localhost:3000
+	$(MAKE) -C "./frontend/" ci-acceptance-test
+	$(MAKE) acceptance-containers-stop
+
+###########################################
+# Release
+###########################################

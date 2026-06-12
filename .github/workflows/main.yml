@@ -15,7 +15,7 @@ on:
 env:
   IMAGE_NAME_PREFIX: ghcr.io/sneridagh/sneridagh-dev
   NODE_VERSION: "24.x"
-  PYTHON_VERSION: "3.12"
+  PYTHON_VERSION: "3.13"
 
 jobs:
   config:

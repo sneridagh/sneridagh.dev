@@ -1,0 +1,22 @@
+{
+    "title": "sneridagh.dev",
+    "description": "A new project using Plone 6.",
+    "project_slug": "sneridagh-dev",
+    "hostname": "sneridagh.dev",
+    "author": "Victor Fernandez de Alba",
+    "email": "sneridagh@gmail.com",
+    "use_prerelease_versions": false,
+    "plone_version": "6.2.0",
+    "volto_version": "19.1.4",
+    "python_package_name": "sneridagh_dev",
+    "frontend_addon_name": "volto-sneridagh-dev",
+    "language_code": "en",
+    "github_organization": "collective",
+    "container_registry": "github",
+    "devops_storage": "relstorage",
+    "devops_cache": true,
+    "devops_ansible": true,
+    "devops_gha_deploy": true,
+    "initialize_documentation": true,
+    "__template__": "project"
+}

@@ -30,7 +30,7 @@ jobs:
     steps:
 
         - name: Checkout
-          uses: actions/checkout@v4
+          uses: actions/checkout@v6
 
         - name: Install the latest version of uv
           uses: astral-sh/setup-uv@v5
@@ -83,7 +83,7 @@ jobs:
     steps:
 
         - name: Checkout
-          uses: actions/checkout@v4
+          uses: actions/checkout@v6
 
         - name: Install the latest version of uv
           uses: astral-sh/setup-uv@v5
@@ -112,7 +112,7 @@ jobs:
       - test
     steps:
         - name: Checkout
-          uses: actions/checkout@v4
+          uses: actions/checkout@v6
 
         - name: Install the latest version of uv
           uses: astral-sh/setup-uv@v5
@@ -152,7 +152,7 @@ jobs:
     steps:
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Docker meta
         id: meta

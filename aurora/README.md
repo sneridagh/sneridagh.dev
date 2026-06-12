@@ -1,11 +1,11 @@
-# Seven Add-on (seven-add-on)
+# sneridagh.dev Plone Aurora add-on (aurora-sneridagh-dev)
 
-A new add-on for Seven
+A new add-on for Plone Aurora.
 
-[![npm](https://img.shields.io/npm/v/seven-add-on)](https://www.npmjs.com/package/seven-add-on)
-[![](https://img.shields.io/badge/-Storybook-ff4785?logo=Storybook&logoColor=white&style=flat-square)](https://collective.github.io/seven-add-on/)
-[![Code analysis checks](https://github.com/collective/seven-add-on/actions/workflows/code.yml/badge.svg)](https://github.com/collective/seven-add-on/actions/workflows/code.yml)
-[![Unit tests](https://github.com/collective/seven-add-on/actions/workflows/unit.yml/badge.svg)](https://github.com/collective/seven-add-on/actions/workflows/unit.yml)
+[![npm](https://img.shields.io/npm/v/aurora-sneridagh-dev)](https://www.npmjs.com/package/aurora-sneridagh-dev)
+[![](https://img.shields.io/badge/-Storybook-ff4785?logo=Storybook&logoColor=white&style=flat-square)](https://collective.github.io/aurora-sneridagh-dev/)
+[![Code analysis checks](https://github.com/collective/aurora-sneridagh-dev/actions/workflows/code.yml/badge.svg)](https://github.com/collective/aurora-sneridagh-dev/actions/workflows/code.yml)
+[![Unit tests](https://github.com/collective/aurora-sneridagh-dev/actions/workflows/unit.yml/badge.svg)](https://github.com/collective/aurora-sneridagh-dev/actions/workflows/unit.yml)
 
 ## Features
 
@@ -22,19 +22,19 @@ Create a new Volto project (you can skip this step if you already have one):
 
 ```
 npm install -g yo @plone/generator-volto
-yo @plone/volto my-volto-project --addon seven-add-on
+yo @plone/volto my-volto-project --addon aurora-sneridagh-dev
 cd my-volto-project
 ```
 
-Add `seven-add-on` to your package.json:
+Add `aurora-sneridagh-dev` to your package.json:
 
 ```JSON
 "addons": [
-    "seven-add-on"
+    "aurora-sneridagh-dev"
 ],
 
 "dependencies": {
-    "seven-add-on": "*"
+    "aurora-sneridagh-dev": "*"
 }
 ```
 
@@ -52,24 +52,24 @@ yarn start
 
 ### Volto 18 and later
 
-Add `seven-add-on` to your `package.json`:
+Add `aurora-sneridagh-dev` to your `package.json`:
 
 ```json
 "dependencies": {
-    "seven-add-on": "*"
+    "aurora-sneridagh-dev": "*"
 }
 ```
 
-Add `seven-add-on` to your `volto.config.js`:
+Add `aurora-sneridagh-dev` to your `volto.config.js`:
 
 ```javascript
-const addons = ['seven-add-on'];
+const addons = ['aurora-sneridagh-dev'];
 ```
 
 If this package provides a Volto theme, and you want to activate it, then add the following to your `volto.config.js`:
 
 ```javascript
-const theme = 'seven-add-on';
+const theme = 'aurora-sneridagh-dev';
 ```
 
 ## Test installation
@@ -200,4 +200,4 @@ The project is licensed under the MIT license.
 
 ## Credits and Acknowledgements 🙏
 
-Crafted with care by **Generated using [Cookieplone (0.8.4)](https://github.com/plone/cookieplone) and [cookieplone-templates (90ff2fb)](https://github.com/plone/cookieplone-templates/commit/90ff2fbdd4330914a5b13e3b035b0c46f682d563) on 2025-03-23 11:33:06.407795**. A special thanks to all contributors and supporters!
+Crafted with care by **Generated using [Cookieplone (2.0.0b3)](https://github.com/plone/cookieplone) and [cookieplone-templates (6678734)](https://github.com/plone/cookieplone-templates/commit/6678734cc3713f3fab9ea510616cef59dc466514) on 2026-06-12 17:12:01.301296**. A special thanks to all contributors and supporters!

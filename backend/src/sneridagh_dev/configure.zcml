@@ -1,6 +1,5 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
-    xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:i18n="http://namespaces.zope.org/i18n"
     i18n_domain="sneridagh_dev"
     >
@@ -17,7 +16,7 @@
   <include file="profiles.zcml" />
   <include file="permissions.zcml" />
 
-  <include package=".controlpanel" />
+  <include package=".controlpanels" />
   <include package=".indexers" />
   <include package=".serializers" />
   <include package=".vocabularies" />

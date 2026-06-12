@@ -1,4 +1,4 @@
-from Products.CMFPlone.interfaces import INonInstallable
+from plone.base.interfaces.installable import INonInstallable
 from zope.interface import implementer
 
 
@@ -8,4 +8,10 @@ class HiddenProfiles:
         """Hide uninstall profile from site-creation and quickinstaller."""
         return [
             "sneridagh_dev:uninstall",
+        ]
+
+    def getNonInstallableProducts(self):
+        """Hide the upgrades package from site-creation and quickinstaller."""
+        return [
+            "sneridagh_dev.upgrades",
         ]

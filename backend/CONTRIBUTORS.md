@@ -1,3 +1,3 @@
 # Contributors
 
-- Plone Foundation [collective@plone.org]
+- Victor Fernandez de Alba [sneridagh@gmail.com]

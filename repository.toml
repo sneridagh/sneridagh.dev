@@ -1,31 +1,28 @@
 [repository]
-name = "sneridagh.dev"
-managed_by_uv = false
+name = "sneridagh-dev"
 changelog = "CHANGELOG.md"
 version = "version.txt"
-compose = "docker-compose.yml"
+version_format = "calver"
+container_images_prefix = "ghcr.io/collective/sneridagh-dev-"
+compose = ["docker-compose.yml"]
 
 [repository.towncrier]
 section = "Project"
 settings = "towncrier.toml"
 
-[backend]
-path = "backend"
-
 [backend.package]
-name = "project.title"
+name = "sneridagh_dev"
 path = "backend"
+code_path = "src/sneridagh_dev"
 changelog = "backend/CHANGELOG.md"
 towncrier_settings = "backend/pyproject.toml"
 base_package = "Products.CMFPlone"
 publish = false
 
-[frontend]
-path = "frontend"
-
 [frontend.package]
 name = "volto-sneridagh-dev"
 path = "frontend/packages/volto-sneridagh-dev"
+code_path = "src"
 changelog = "frontend/packages/volto-sneridagh-dev/CHANGELOG.md"
 towncrier_settings = "frontend/packages/volto-sneridagh-dev/towncrier.toml"
 base_package = "@plone/volto"
@@ -33,5 +30,5 @@ publish = false
 
 [cookieplone]
 template = "project"
-template_version = "684d5c7f43a6ebc3184e2a0106b0160820a96e66"
-generated_date = "2025-05-22 10:51:40"
+template_version = "6678734cc3713f3fab9ea510616cef59dc466514"
+generated_date = "2026-06-12 20:51:55"

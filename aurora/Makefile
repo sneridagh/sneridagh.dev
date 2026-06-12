@@ -26,6 +26,8 @@ DOCKER_IMAGE=plone/server-dev:${PLONE_VERSION}
 DOCKER_IMAGE_ACCEPTANCE=plone/server-acceptance:${PLONE_VERSION}
 
 ADDON_NAME='aurora-sneridagh-dev'
+IMAGE_NAME=ghcr.io/sneridagh/sneridagh-dev-aurora
+IMAGE_TAG=latest
 
 .PHONY: help
 help: ## Show this help
@@ -148,3 +150,7 @@ acceptance-test: ## Start Cypress in interactive mode
 .PHONY: ci-acceptance-test
 ci-acceptance-test: ## Run cypress tests in headless mode for CI
 	pnpm --filter @plone/tooling exec cypress run --config-file $(CURRENT_DIR)/core/packages/tooling/cypress.config.js --config specPattern=$(CURRENT_DIR)'/cypress/tests/**/*.{js,jsx,ts,tsx}'
+
+.PHONY: build-image
+build-image:  ## Build Docker Image
+	@DOCKER_BUILDKIT=1 docker build . -t $(IMAGE_NAME):$(IMAGE_TAG) -f Dockerfile --build-arg VOLTO_VERSION=$(VOLTO_VERSION)

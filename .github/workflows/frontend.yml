@@ -26,7 +26,7 @@ jobs:
       volto: ${{ steps.filter.outputs.volto }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
       - name: Compute several vars needed for the build
         id: vars
         run: |
@@ -37,7 +37,7 @@ jobs:
           echo "BASE_TAG=${{ steps.vars.outputs.BASE_TAG }}"
           echo "VOLTO_VERSION=${{ steps.vars.outputs.VOLTO_VERSION }}"
 
-      - uses: dorny/paths-filter@v3
+      - uses: dorny/paths-filter@v4
         id: filter
         with:
           filters: |
@@ -51,7 +51,7 @@ jobs:
     needs: config
     steps:
       - name: Main checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -115,7 +115,7 @@ jobs:
     steps:
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Docker meta
         id: meta

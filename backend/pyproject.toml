@@ -30,6 +30,7 @@ dependencies = [
     "plone.volto",
     "kitconcept.voltolighttheme",
     "collective.blog>=1.0.0a5",
+    "rss-provider",
 ]
 
 [dependency-groups]

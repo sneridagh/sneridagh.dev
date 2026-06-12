@@ -4658,6 +4658,21 @@ wheels = [
 ]
 
 [[package]]
+name = "rss-provider"
+version = "1.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "plone-api" },
+    { name = "plone-restapi" },
+    { name = "plone-volto" },
+    { name = "products-cmfplone" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/1f/b8/b14554cdd1863c9f7ecdd46fe55823890cfc0d1fc22ceceb8f36534519a7/rss_provider-1.1.0.tar.gz", hash = "sha256:2d5df47a742463c102edb3ee5f6e68eecfe301c568b00e7416837894724f7301", size = 114229, upload-time = "2025-06-02T18:21:42.298Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/97/8f/8a46c4d5fc8f7f3b5cfa8f76b07cc01de3b6e0f2481968b6e1aa1548693c/rss_provider-1.1.0-py3-none-any.whl", hash = "sha256:2cd1f79cc7db7637cc03e0062fc3609665ee907b6eba5f3ed7230f3d071284e4", size = 68746, upload-time = "2025-06-02T18:21:40.101Z" },
+]
+
+[[package]]
 name = "seedir"
 version = "0.5.1"
 source = { registry = "https://pypi.org/simple" }
@@ -4760,6 +4775,7 @@ dependencies = [
     { name = "plone-restapi" },
     { name = "plone-volto" },
     { name = "products-cmfplone" },
+    { name = "rss-provider" },
 ]
 
 [package.dev-dependencies]
@@ -4786,6 +4802,7 @@ requires-dist = [
     { name = "plone-restapi" },
     { name = "plone-volto" },
     { name = "products-cmfplone", specifier = "==6.2.0" },
+    { name = "rss-provider" },
 ]
 
 [package.metadata.requires-dev]

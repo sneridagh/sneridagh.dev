@@ -3,8 +3,8 @@ version: '3.8'
 
 services:
 
-  seven:
-    image: ghcr.io/sneridagh/sneridagh-dev-seven-frontend:${STACK_PARAM:-latest}
+  aurora:
+    image: ghcr.io/sneridagh/sneridagh-dev-aurora-frontend:${STACK_PARAM:-latest}
     environment:
       PLONE_API_PATH: http://sneridagh-dev_backend:8080/Plone
       PLONE_INTERNAL_API_PATH: http://sneridagh-dev_backend:8080/Plone

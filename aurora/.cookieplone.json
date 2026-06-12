@@ -1,0 +1,11 @@
+{
+    "title": "sneridagh.dev Plone Aurora add-on",
+    "frontend_addon_name": "aurora-sneridagh-dev",
+    "project_slug": "sneridagh-dev-plone-aurora",
+    "description": "A new add-on for Plone Aurora.",
+    "author": "Victor Fernandez de Alba",
+    "email": "sneridagh@gmail.com",
+    "github_organization": "collective",
+    "npm_package_name": "aurora-sneridagh-dev",
+    "__template__": "aurora_addon"
+}

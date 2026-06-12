@@ -25,11 +25,7 @@ PLONE_VERSION=6
 DOCKER_IMAGE=plone/server-dev:${PLONE_VERSION}
 DOCKER_IMAGE_ACCEPTANCE=plone/server-acceptance:${PLONE_VERSION}
 
-ADDON_NAME='seven-add-on'
-IMAGE_NAME=ghcr.io/sneridagh/sneridagh-dev-frontend
-IMAGE_TAG=latest
-# VOLTO_VERSION = $(shell cat ./mrs.developer.json | python -c "import sys, json; print(json.load(sys.stdin)['core']['tag'])")
-
+ADDON_NAME='aurora-sneridagh-dev'
 
 .PHONY: help
 help: ## Show this help
@@ -61,8 +57,8 @@ core/packages/components/dist: $(shell find core/packages/components/src -type f
 core/packages/client/dist: $(shell find core/packages/client/src -type f)
 	pnpm --filter @plone/client build
 
-# core/packages/providers/dist: $(shell find core/packages/providers/src -type f)
-# 	pnpm --filter @plone/providers build
+core/packages/providers/dist: $(shell find core/packages/providers/src -type f)
+	pnpm --filter @plone/providers build
 
 core/packages/helpers/dist: $(shell find core/packages/helpers/src -type f)
 	pnpm --filter @plone/helpers build
@@ -71,7 +67,7 @@ core/packages/react-router/dist: $(shell find core/packages/react-router/src -ty
 	pnpm --filter @plone/react-router build
 
 .PHONY: build-deps
-build-deps: core/packages/registry/dist core/packages/components/dist core/packages/client/dist core/packages/react-router/dist core/packages/helpers/dist ## Build dependencies
+build-deps: core/packages/registry/dist core/packages/components/dist core/packages/client/dist core/packages/providers/dist core/packages/react-router/dist core/packages/helpers/dist ## Build dependencies
 
 .PHONY: i18n
 i18n: ## Sync i18n
@@ -109,7 +105,7 @@ test: ## Run unit tests
 ci-test: ## Run unit tests in CI
 	# Unit Tests need the i18n to be built
 	VOLTOCONFIG=$(pwd)/volto.config.js pnpm --filter @plone/volto i18n
-	CI=1 RAZZLE_JEST_CONFIG=$(CURRENT_DIR)/jest-addon.config.js pnpm --filter @plone/volto test -- --passWithNoTests
+	CI=1 RAZZLE_JEST_CONFIG=$(CURRENT_DIR)/jest-addon.config.js pnpm run --filter @plone/volto test --passWithNoTests
 
 .PHONY: backend-docker-start
 backend-docker-start:	## Starts a Docker-based backend for development
@@ -131,11 +127,11 @@ storybook-build: ## Build Storybook
 ## Acceptance
 .PHONY: acceptance-frontend-dev-start
 acceptance-frontend-dev-start: ## Start acceptance frontend in development mode
-	RAZZLE_API_PATH=http://127.0.0.1:55001/plone pnpm start
+	PLONE_API_PATH=http://127.0.0.1:55001/plone pnpm start
 
 .PHONY: acceptance-frontend-prod-start
 acceptance-frontend-prod-start: ## Start acceptance frontend in production mode
-	RAZZLE_API_PATH=http://127.0.0.1:55001/plone pnpm build && pnpm start:prod
+	pnpm build && PLONE_API_PATH=http://127.0.0.1:55001/plone pnpm start:prod
 
 .PHONY: acceptance-backend-start
 acceptance-backend-start: ## Start backend acceptance server
@@ -147,12 +143,8 @@ ci-acceptance-backend-start: ## Start backend acceptance server in headless mode
 
 .PHONY: acceptance-test
 acceptance-test: ## Start Cypress in interactive mode
-	pnpm --filter @plone/volto exec cypress open --config-file $(CURRENT_DIR)/cypress.config.js --config specPattern=$(CURRENT_DIR)'/cypress/tests/**/*.{js,jsx,ts,tsx}'
+	pnpm --filter @plone/tooling exec cypress open --config-file $(CURRENT_DIR)/core/packages/tooling/cypress.config.js --config specPattern=$(CURRENT_DIR)'/cypress/tests/**/*.{js,jsx,ts,tsx}'
 
 .PHONY: ci-acceptance-test
 ci-acceptance-test: ## Run cypress tests in headless mode for CI
-	pnpm --filter @plone/volto exec cypress run --config-file $(CURRENT_DIR)/cypress.config.js --config specPattern=$(CURRENT_DIR)'/cypress/tests/**/*.{js,jsx,ts,tsx}'
-
-.PHONY: build-image
-build-image:  ## Build Docker Image
-	@DOCKER_BUILDKIT=1 docker build . -t $(IMAGE_NAME):$(IMAGE_TAG) -f Dockerfile --build-arg VOLTO_VERSION=$(VOLTO_VERSION)
+	pnpm --filter @plone/tooling exec cypress run --config-file $(CURRENT_DIR)/core/packages/tooling/cypress.config.js --config specPattern=$(CURRENT_DIR)'/cypress/tests/**/*.{js,jsx,ts,tsx}'

@@ -1,5 +1,5 @@
-import { addons } from 'seven/registry.config';
+import { addons } from '@plone/aurora/registry.config';
 
-addons.push('seven-sneridagh-dev');
+addons.push('aurora-sneridagh-dev');
 
 export { addons };

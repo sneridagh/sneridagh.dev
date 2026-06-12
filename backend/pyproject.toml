@@ -28,6 +28,8 @@ dependencies = [
     "plone.api",
     "plone.restapi",
     "plone.volto",
+    "kitconcept.voltolighttheme",
+    "collective.blog>=1.0.0a5",
 ]
 
 [dependency-groups]

@@ -26,7 +26,7 @@ DOCKER_IMAGE=plone/server-dev:${PLONE_VERSION}
 DOCKER_IMAGE_ACCEPTANCE=plone/server-acceptance:${PLONE_VERSION}
 
 ADDON_NAME='aurora-sneridagh-dev'
-IMAGE_NAME=ghcr.io/sneridagh/sneridagh-dev-aurora
+IMAGE_NAME=ghcr.io/sneridagh/sneridagh-dev-aurora-frontend
 IMAGE_TAG=latest
 
 .PHONY: help

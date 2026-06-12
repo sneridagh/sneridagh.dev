@@ -25,20 +25,30 @@ services:
         - traefik.docker.network=public
         - traefik.constraint-label=public
         # Service
-        - traefik.http.services.svc-frontend-seven.loadbalancer.server.port=3000
+        - traefik.http.services.svc-frontend-aurora.loadbalancer.server.port=3000
         # Routers
         ## /
+        - traefik.http.routers.rt-frontend-aurora.rule=Host(`aurora.sneridagh.dev`)
+        - traefik.http.routers.rt-frontend-aurora.entrypoints=https
+        - traefik.http.routers.rt-frontend-aurora.tls=true
+        - traefik.http.routers.rt-frontend-aurora.tls.certresolver=le
+        - traefik.http.routers.rt-frontend-aurora.service=svc-frontend-aurora
+        - traefik.http.routers.rt-frontend-aurora.middlewares=gzip
+        - traefik.http.routers.rt-frontend-aurora.priority=100
+
+        ## Redirect from seven.sneridagh.dev to aurora.sneridagh.dev
+        - "traefik.http.middlewares.mw-redirect-seven-to-aurora.redirectregex.regex=^https://seven.sneridagh.dev(.*)"
+        - "traefik.http.middlewares.mw-redirect-seven-to-aurora.redirectregex.replacement=https://aurora.sneridagh.dev$$1"
+        - "traefik.http.middlewares.mw-redirect-seven-to-aurora.redirectregex.permanent=true"
         - traefik.http.routers.rt-frontend-seven.rule=Host(`seven.sneridagh.dev`)
         - traefik.http.routers.rt-frontend-seven.entrypoints=https
         - traefik.http.routers.rt-frontend-seven.tls=true
         - traefik.http.routers.rt-frontend-seven.tls.certresolver=le
-        - traefik.http.routers.rt-frontend-seven.service=svc-frontend-seven
-        - traefik.http.routers.rt-frontend-seven.middlewares=gzip
-        - traefik.http.routers.rt-frontend-seven.priority=100
-
+        - traefik.http.routers.rt-frontend-seven.middlewares=mw-redirect-seven-to-aurora
+        - traefik.http.routers.rt-frontend-seven.priority=1
         ## Redirect from rr7.sneridagh.dev to seven.sneridagh.dev
         - "traefik.http.middlewares.mw-redirect-rr7-to-seven.redirectregex.regex=^https://rr7.sneridagh.dev(.*)"
-        - "traefik.http.middlewares.mw-redirect-rr7-to-seven.redirectregex.replacement=https://seven.sneridagh.dev$$1"
+        - "traefik.http.middlewares.mw-redirect-rr7-to-seven.redirectregex.replacement=https://aurora.sneridagh.dev$$1"
         - "traefik.http.middlewares.mw-redirect-rr7-to-seven.redirectregex.permanent=true"
         - traefik.http.routers.rt-frontend-rr7.rule=Host(`rr7.sneridagh.dev`)
         - traefik.http.routers.rt-frontend-rr7.entrypoints=https

@@ -5,11 +5,11 @@
 [![Backend Tests](https://github.com/sneridagh/sneridagh.dev/actions/workflows/backend.yml/badge.svg)](https://github.com/sneridagh/sneridagh.dev/actions/workflows/backend.yml)
 [![Frontend Tests](https://github.com/sneridagh/sneridagh.dev/actions/workflows/frontend.yml/badge.svg)](https://github.com/sneridagh/sneridagh.dev/actions/workflows/frontend.yml)
 
-This is the repository for the [sneridagh.dev](https://sneridagh.dev) website, a Plone-based site that serves as a portfolio and blog. The site is built using Plone 6 and Volto, the React-based frontend for Plone.
+This is the repository for the [sneridagh.dev](https://sneridagh.dev) website, a Plone-based site that serves as a portfolio and blog. The site is built using Plone 6.
 
 The project is structured as a monorepo, containing both the backend and frontend codebases, along with devops configurations and documentation.
 
-This is also the repository for the [seven.sneridagh.dev](https://seven.sneridagh.dev) website. It's the proof of concept of the same site but served using Seven, the successor to Volto.
+This is also the repository for the [aurora.sneridagh.dev](https://aurora.sneridagh.dev) website. It's the proof of concept of the same site but served using Plone Aurora, the successor to Plone Volto.
 
 ## Quick Start 🏁
 

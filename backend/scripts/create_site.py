@@ -2,7 +2,7 @@ from AccessControl.SecurityManagement import newSecurityManager
 from Products.CMFPlone.factory import _DEFAULT_PROFILE
 from Products.CMFPlone.factory import addPloneSite
 from Products.GenericSetup.tool import SetupTool
-from sneridagh_dev.interfaces import IBrowserLayer
+from sneridagh_dev.interfaces import ISneridaghDevLayer
 from Testing.makerequest import makerequest
 from zope.interface import directlyProvidedBy
 from zope.interface import directlyProvides
@@ -33,7 +33,7 @@ app = makerequest(globals()["app"])
 
 request = app.REQUEST
 
-ifaces = [IBrowserLayer]
+ifaces = [ISneridaghDevLayer]
 for iface in directlyProvidedBy(request):
     ifaces.append(iface)
 

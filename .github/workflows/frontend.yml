@@ -22,8 +22,8 @@ jobs:
       BASE_TAG: ${{ steps.vars.outputs.BASE_TAG }}
       VOLTO_VERSION: ${{ steps.vars.outputs.VOLTO_VERSION }}
       PLONE_VERSION: ${{ steps.vars.outputs.PLONE_VERSION }}
-      aurora: ${{ steps.filter.outputs.aurora }}
-      volto: ${{ steps.filter.outputs.volto }}
+      AURORA_VERSION: ${{ steps.vars.outputs.AURORA_VERSION }}
+      NODE_VERSION: ${{ env.NODE_VERSION }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -32,10 +32,12 @@ jobs:
         run: |
           echo "BASE_TAG=sha-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           python3 -c 'import json; data = json.load(open("./mrs.developer.json")); print("VOLTO_VERSION=" + data["core"]["tag"])' >> $GITHUB_OUTPUT
+          python3 -c 'import json; data = json.load(open("../aurora/mrs.developer.json")); print("AURORA_VERSION=" + data["core"]["tag"])' >> $GITHUB_OUTPUT
       - name: Test vars
         run: |
           echo "BASE_TAG=${{ steps.vars.outputs.BASE_TAG }}"
           echo "VOLTO_VERSION=${{ steps.vars.outputs.VOLTO_VERSION }}"
+          echo "AURORA_VERSION=${{ steps.vars.outputs.AURORA_VERSION }}"
 
       - uses: dorny/paths-filter@v4
         id: filter
@@ -171,7 +173,7 @@ jobs:
           tags: ${{ steps.aurora.outputs.tags }}
           labels: $${{ steps.aurora.outputs.labels }}
           build-args: |
-            VOLTO_VERSION=${{ needs.config.outputs.VOLTO_VERSION }}
+            AURORA_VERSION=${{ needs.config.outputs.AURORA_VERSION }}
 
       - name: Build and push
         uses: docker/build-push-action@v4

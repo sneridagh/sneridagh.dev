@@ -29,6 +29,8 @@ ADDON_NAME='aurora-sneridagh-dev'
 IMAGE_NAME=ghcr.io/sneridagh/sneridagh-dev-aurora-frontend
 IMAGE_TAG=latest
 
+AURORA_VERSION = $(shell cat ./mrs.developer.json | python -c "import sys, json; print(json.load(sys.stdin)['core']['tag'])")
+
 .PHONY: help
 help: ## Show this help
 	@echo -e "$$(grep -hE '^\S+:.*##' $(MAKEFILE_LIST) | sed -e 's/:.*##\s*/:/' -e 's/^\(.\+\):\(.*\)/\\x1b[36m\1\\x1b[m:\2/' | column -c2 -t -s :)"
@@ -59,9 +61,6 @@ core/packages/components/dist: $(shell find core/packages/components/src -type f
 core/packages/client/dist: $(shell find core/packages/client/src -type f)
 	pnpm --filter @plone/client build
 
-core/packages/providers/dist: $(shell find core/packages/providers/src -type f)
-	pnpm --filter @plone/providers build
-
 core/packages/helpers/dist: $(shell find core/packages/helpers/src -type f)
 	pnpm --filter @plone/helpers build
 
@@ -69,7 +68,7 @@ core/packages/react-router/dist: $(shell find core/packages/react-router/src -ty
 	pnpm --filter @plone/react-router build
 
 .PHONY: build-deps
-build-deps: core/packages/registry/dist core/packages/components/dist core/packages/client/dist core/packages/providers/dist core/packages/react-router/dist core/packages/helpers/dist ## Build dependencies
+build-deps: core/packages/registry/dist core/packages/components/dist core/packages/client/dist core/packages/react-router/dist core/packages/helpers/dist ## Build dependencies
 
 .PHONY: i18n
 i18n: ## Sync i18n
@@ -153,4 +152,4 @@ ci-acceptance-test: ## Run cypress tests in headless mode for CI
 
 .PHONY: build-image
 build-image:  ## Build Docker Image
-	@DOCKER_BUILDKIT=1 docker build . -t $(IMAGE_NAME):$(IMAGE_TAG) -f Dockerfile --build-arg VOLTO_VERSION=$(VOLTO_VERSION)
+	@DOCKER_BUILDKIT=1 docker build . -t $(IMAGE_NAME):$(IMAGE_TAG) -f Dockerfile --build-arg AURORA_VERSION=$(AURORA_VERSION)

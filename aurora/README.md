@@ -201,4 +201,3 @@ The project is licensed under the MIT license.
 ## Credits and Acknowledgements 🙏
 
 Crafted with care by **Generated using [Cookieplone (2.0.0b3)](https://github.com/plone/cookieplone) and [cookieplone-templates (6678734)](https://github.com/plone/cookieplone-templates/commit/6678734cc3713f3fab9ea510616cef59dc466514) on 2026-06-12 17:12:01.301296**. A special thanks to all contributors and supporters!
-

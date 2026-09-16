@@ -33,11 +33,6 @@ jobs:
           echo "BASE_TAG=sha-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           python3 -c 'import json; data = json.load(open("./mrs.developer.json")); print("VOLTO_VERSION=" + data["core"]["tag"])' >> $GITHUB_OUTPUT
           python3 -c 'import json; data = json.load(open("../aurora/mrs.developer.json")); print("AURORA_VERSION=" + data["core"]["tag"])' >> $GITHUB_OUTPUT
-      - name: Test vars
-        run: |
-          echo "BASE_TAG=${{ steps.vars.outputs.BASE_TAG }}"
-          echo "VOLTO_VERSION=${{ steps.vars.outputs.VOLTO_VERSION }}"
-          echo "AURORA_VERSION=${{ steps.vars.outputs.AURORA_VERSION }}"
 
       - uses: dorny/paths-filter@v4
         id: filter
@@ -47,6 +42,14 @@ jobs:
               - 'aurora/**'
             volto:
               - 'frontend/**'
+
+      - name: Test vars
+        run: |
+          echo "BASE_TAG=${{ steps.vars.outputs.BASE_TAG }}"
+          echo "VOLTO_VERSION=${{ steps.vars.outputs.VOLTO_VERSION }}"
+          echo "AURORA_VERSION=${{ steps.vars.outputs.AURORA_VERSION }}"
+          echo 'aurora: ${{ steps.filter.outputs.aurora }}'
+          echo 'frontend: ${{ steps.filter.outputs.frontend }}'
 
   code-analysis:
     runs-on: ubuntu-latest

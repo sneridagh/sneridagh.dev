@@ -32,6 +32,7 @@ jobs:
       PYTHON_VERSION: ${{ env.PYTHON_VERSION }}
       PLONE_VERSION: ${{ steps.vars.outputs.PLONE_VERSION }}
       VOLTO_VERSION: ${{ steps.vars.outputs.VOLTO_VERSION }}
+      AURORA_VERSION: ${{ steps.vars.outputs.AURORA_VERSION }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
@@ -45,6 +46,7 @@ jobs:
           echo "BASE_TAG=sha-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
           echo "PLONE_VERSION=$(cat backend/version.txt)" >> $GITHUB_OUTPUT
           python3 -c 'import json; data = json.load(open("./frontend/mrs.developer.json")); print("VOLTO_VERSION=" + (data["core"].get("tag") or "latest"))' >> $GITHUB_OUTPUT
+          python3 -c 'import json; data = json.load(open("./aurora/mrs.developer.json")); print("AURORA_VERSION=" + (data["core"].get("tag") or "latest"))' >> $GITHUB_OUTPUT
 
       - uses: dorny/paths-filter@v4
         id: filter
@@ -65,8 +67,9 @@ jobs:
           echo 'BASE_TAG=${{ steps.vars.outputs.BASE_TAG }}'
           echo 'PLONE_VERSION=${{ steps.vars.outputs.PLONE_VERSION }}'
           echo 'VOLTO_VERSION=${{ steps.vars.outputs.VOLTO_VERSION }}'
+          echo 'AURORA_VERSION=${{ steps.vars.outputs.AURORA_VERSION }}'
           echo 'backend: ${{ steps.filter.outputs.backend }}'
-          echo 'docs: ${{ steps.filter.outputs.docs }}'
+          echo 'aurora: ${{ steps.filter.outputs.aurora }}'
           echo 'frontend: ${{ steps.filter.outputs.frontend }}'
 
   backend:

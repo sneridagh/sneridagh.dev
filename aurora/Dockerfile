@@ -34,6 +34,6 @@ RUN <<EOT
     # prompt (there is no TTY during the image build).
     export CI=true
     corepack enable pnpm
-    corepack use pnpm@11.20.0
-    corepack prepare pnpm@11.20.0 --activate
+    corepack use pnpm@12.14.0
+    corepack prepare pnpm@12.14.0 --activate
 EOT

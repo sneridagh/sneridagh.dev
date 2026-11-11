@@ -49,5 +49,5 @@
       "react-refresh": "^0.14.2"
     }
   },
-  "packageManager": "pnpm@9.1.1"
+  "packageManager": "pnpm@9.15.9"
 }

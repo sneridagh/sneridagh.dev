@@ -34,6 +34,7 @@
     "react-dom": "catalog:"
   },
   "devDependencies": {
+    "@plone/icons": "workspace:*",
     "@plone/registry": "workspace:*",
     "@plone/scripts": "workspace:*",
     "@plone/types": "workspace:*",

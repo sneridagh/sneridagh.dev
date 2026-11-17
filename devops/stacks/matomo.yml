@@ -3,14 +3,21 @@ version: '3.8'
 services:
 
   matomo:
-    image: matomo:4.15
+    # Matomo 5.14.2 on PHP 8.4.27 (php:8.4-apache base).
+    # The official image is rebuilt under the same tag when PHP or Debian get
+    # security fixes, so redeploying pulls them in.
+    image: matomo:5.14.2-apache
     depends_on:
       - db
     networks:
       - nw-stats-prod
       - public
     volumes:
-      - vol-matomo-root:/var/www/html
+      # Only persist what Matomo writes at runtime. The application code must
+      # come from the image: the entrypoint only copies it into /var/www/html
+      # when that folder is empty, so a persisted webroot never gets upgraded.
+      - vol-matomo-config:/var/www/html/config
+      - vol-matomo-misc-user:/var/www/html/misc/user
     environment:
       MATOMO_DATABASE_HOST: "db"
       MATOMO_DATABASE_ADAPTER: "mysql"
@@ -61,10 +68,15 @@ volumes:
       type: none
       device: /srv/matomo/data
       o: bind
-  vol-matomo-root:
+  vol-matomo-config:
     driver_opts:
       type: none
-      device: /srv/matomo/etc
+      device: /srv/matomo/etc/config
+      o: bind
+  vol-matomo-misc-user:
+    driver_opts:
+      type: none
+      device: /srv/matomo/etc/misc/user
       o: bind
 
 networks:

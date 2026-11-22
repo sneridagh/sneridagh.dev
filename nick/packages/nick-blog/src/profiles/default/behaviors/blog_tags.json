@@ -1,0 +1,33 @@
+{
+  "id": "blog_tags",
+  "title:i18n": "Blog tags",
+  "description:i18n": "Adds tags of the blog, which are the blog's Blog Tag items.",
+  "schema": {
+    "fieldsets": [
+      {
+        "fields": ["blog_tags"],
+        "id": "metadata",
+        "title:i18n": "Metadata"
+      }
+    ],
+    "properties": {
+      "blog_tags": {
+        "title:i18n": "Tags",
+        "type": "array",
+        "uniqueItems": true,
+        "default": [],
+        "factory": "Tuple",
+        "items": {
+          "title": "",
+          "description": "",
+          "type": "string",
+          "factory": "Choice",
+          "vocabulary": {
+            "@id": "collective.blog.tags"
+          }
+        },
+        "widget": "select"
+      }
+    }
+  }
+}

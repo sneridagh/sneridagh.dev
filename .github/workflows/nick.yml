@@ -1,0 +1,67 @@
+name: Nick CI
+
+on:
+  workflow_call:
+    inputs:
+      base-tag:
+        required: true
+        type: string
+      image-name-prefix:
+        required: true
+        type: string
+      image-name-suffix:
+        required: false
+        type: string
+        default: nick
+      working-directory:
+        required: false
+        type: string
+        default: nick
+
+jobs:
+
+  test:
+    name: "Nick: Smoke test"
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Start Nick and PostgreSQL
+        run: docker compose up -d --build --wait --wait-timeout 180
+
+      - name: Check health, admin user and blog types
+        run: |
+          curl -sf -H 'Accept: application/json' http://localhost:8081/@health
+          TOKEN=$(curl -sf -X POST -H 'Accept: application/json' \
+            -H 'Content-Type: application/json' \
+            -d '{"login":"admin","password":"admin"}' \
+            http://localhost:8081/@login | jq -r .token)
+          curl -sf -H 'Accept: application/json' \
+            -H "Authorization: Bearer ${TOKEN}" \
+            http://localhost:8081/@types | grep -q '/@types/Post"'
+
+      - name: Logs
+        if: ${{ failure() }}
+        run: docker compose logs nick
+
+  release:
+    name: "Nick: Build and publish Container Image"
+    uses: plone/meta/.github/workflows/container-image-build-push.yml@2.x
+    needs:
+      - test
+    permissions:
+      contents: read
+      packages: write
+    with:
+      base-tag: ${{ inputs.base-tag }}
+      image-name-prefix: ${{ inputs.image-name-prefix }}
+      image-name-suffix: ${{ inputs.image-name-suffix }}
+      working-directory: ${{ inputs.working-directory }}
+      push: ${{ github.event_name != 'pull_request' }}
+    secrets:
+      username: ${{ github.actor }}
+      password: ${{ secrets.GITHUB_TOKEN }}

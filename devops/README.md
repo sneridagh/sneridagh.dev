@@ -20,6 +20,8 @@ We deploy a robust website running [Plone](https://plone.org/) using a Docker st
 
 - **Postgres 14 Database:** A reliable, robust database to store the site data, ensuring that our content is safe, secure, and quickly accessible. 🗃️⚡
 
+- **Nick:** The Node.js backend that serves the Plone REST API, at [nick.sneridagh.dev](https://nick.sneridagh.dev), with its own **Postgres 18** database (`db-nick`). The image is built from [`nick/`](../nick/README.md). It runs side by side with the Plone backend until the site is migrated to it. 🟢
+
 
 Now, let’s dive into the setup! 🏊‍♂️💫
 ## Setup
@@ -129,6 +131,21 @@ If deploying for the first time, the frontend containers might not be `healthy` 
 make stack-create-site
 ```
 
+### Nick
+
+The `nick` and `db-nick` services need these variables in the stack environment (the `ENV_FILE` secret of the GitHub environment, see [README-GHA.md](README-GHA.md)). Deploying the stack fails while `NICK_DB_PASSWORD` or `NICK_SECRET` is missing:
+
+| Variable              | Description                                                                                              |
+| --------------------- | -------------------------------------------------------------------------------------------------------- |
+| `NICK_DB_PASSWORD`    | Password of the `nick` Postgres user. Postgres only reads it when it creates the database.              |
+| `NICK_SECRET`         | Secret that signs the authentication tokens, for example the output of `openssl rand -hex 32`.         |
+| `NICK_ADMIN_PASSWORD` | Password of the `admin` user. Only read on the first start, when the empty database is set up.         |
+
+Before the first deployment:
+
+- Create the data folder `/srv/sneridagh-dev/nick-data` (owned by `999:999`, mode `0750`) on the server, with `make server-setup` or by hand.
+- Point the DNS record of `nick.sneridagh.dev` to the server, so Traefik can get its certificate.
+
 ### Log Monitoring
 
 Monitor logs for each service using the commands below:
@@ -136,3 +153,4 @@ Monitor logs for each service using the commands below:
 - Traefik: ```make logs-webserver```
 - Frontend: ```make logs-frontend```
 - Backend: ```make logs-backend```
+- Nick: ```make stack-logs-nick```

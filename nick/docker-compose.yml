@@ -1,0 +1,42 @@
+# Local Nick with the nick-blog add-on and PostgreSQL, for development and
+# testing the image: http://localhost:8081
+name: sneridagh-dev-nick
+
+services:
+  nick:
+    build: .
+    image: ghcr.io/sneridagh/sneridagh-dev-nick:local
+    environment:
+      PORT: "8081"
+      DB_HOST: db
+      DB_NAME: nick
+      DB_USER: nick
+      DB_PASSWORD: nick
+      SECRET: local-development-secret
+      NICK_ADMIN_PASSWORD: admin
+      BLOBS: db
+      ALLOWED_ORIGINS: http://localhost:3000
+      # The image installs sneridagh-dev:default: the site root and an admin
+      # user with the password NICK_ADMIN_PASSWORD.
+      PROFILES: ${PROFILES:-sneridagh-dev:default}
+    ports:
+      - "8081:8081"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: nick
+      POSTGRES_PASSWORD: nick
+      POSTGRES_DB: nick
+    volumes:
+      - data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nick"]
+      interval: 2s
+      retries: 30
+
+volumes:
+  data:

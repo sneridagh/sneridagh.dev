@@ -1,0 +1,28 @@
+{
+  "name": "sneridagh-dev",
+  "description": "Site profile of sneridagh.dev for Nick: the site root and the add-ons of the site",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "version": "1.0.0",
+  "exports": {
+    ".": "./src/index.ts",
+    "./package.json": "./package.json"
+  },
+  "nick": {
+    "profiles": "src/profiles"
+  },
+  "keywords": [
+    "nick",
+    "nick-addon"
+  ],
+  "engines": {
+    "node": "^22 || ^24 || ^25 || ^26"
+  },
+  "dependencies": {
+    "nick-blog": "workspace:*"
+  },
+  "peerDependencies": {
+    "@plone/nick": "^3.1.0"
+  }
+}

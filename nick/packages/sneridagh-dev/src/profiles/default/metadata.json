@@ -1,0 +1,7 @@
+{
+  "id": "sneridagh-dev:default",
+  "title": "sneridagh.dev",
+  "description": "Site root and add-ons of sneridagh.dev",
+  "version": 1000,
+  "dependencies": ["@plone/nick:core", "nick-blog:default"]
+}

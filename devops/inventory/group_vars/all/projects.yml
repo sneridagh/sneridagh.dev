@@ -5,6 +5,11 @@ project_folders:
     owner: 999
     group: 999
     mode: "0750"
+  # Path to store sneridagh.dev Nick postgres data
+  - path: "/srv/sneridagh-dev/nick-data"
+    owner: 999
+    group: 999
+    mode: "0750"
   # Path to store sneridagh.dev matomo data
   - path: "/srv/matomo/data"
     owner: 999

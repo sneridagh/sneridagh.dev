@@ -1,0 +1,7 @@
+{
+  "id": "nick-blog:default",
+  "title": "Blog",
+  "description": "Blog, post, author and tag types, blog indexes, vocabularies and the @authors service: the features of collective.blog",
+  "version": 1000,
+  "dependencies": ["@plone/nick:core"]
+}

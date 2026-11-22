@@ -1,0 +1,29 @@
+{
+  "id": "BlogFolder",
+  "title:i18n": "Blog",
+  "description:i18n": "A folderish content item representing a Blog",
+  "global_allow": true,
+  "filter_content_types": true,
+  "allowed_content_types": [
+    "Page",
+    "File",
+    "Image",
+    "Post"
+  ],
+  "schema": {
+    "behaviors": [
+      "dublin_core",
+      "dates",
+      "blocks",
+      "versioning",
+      "short_name",
+      "id_from_title",
+      "folderish",
+      "exclude_from_nav",
+      "preview_image_link",
+      "blog_info"
+    ],
+    "layouts": []
+  },
+  "workflow": "simple_publication_workflow"
+}

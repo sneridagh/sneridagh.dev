@@ -1,0 +1,85 @@
+{
+  "indexes": [
+    {
+      "name": "blog_uid",
+      "type": "uuid",
+      "attr": "getBlogUid",
+      "title:i18n": "Blog",
+      "description:i18n": "The blog an item belongs to",
+      "group": "Blog",
+      "enabled": false,
+      "sortable": false
+    },
+    {
+      "name": "blog_tags",
+      "type": "string[]",
+      "attr": "getBlogTags",
+      "title:i18n": "Blog Tag",
+      "description:i18n": "Categorization by Tags.",
+      "group": "Blog",
+      "enabled": true,
+      "sortable": false,
+      "operators": {
+        "selection.any": {
+          "title:i18n": "Matches any condition",
+          "description:i18n": "Tip: you can use * to autocomplete.",
+          "operation": "contains",
+          "widget": "MultipleSelectionWidget"
+        },
+        "selection.all": {
+          "title:i18n": "Matches all conditions",
+          "description:i18n": "Tip: you can use * to autocomplete.",
+          "operation": "all",
+          "widget": "MultipleSelectionWidget"
+        }
+      },
+      "vocabulary": "collective.blog.tags"
+    },
+    {
+      "name": "blog_authors",
+      "type": "string[]",
+      "attr": "getBlogAuthorUids",
+      "title:i18n": "Author",
+      "description:i18n": "Categorization by Authors.",
+      "group": "Blog",
+      "enabled": true,
+      "sortable": false,
+      "operators": {
+        "selection.any": {
+          "title:i18n": "Matches any condition",
+          "description:i18n": "Tip: you can use * to autocomplete.",
+          "operation": "contains",
+          "widget": "MultipleSelectionWidget"
+        }
+      },
+      "vocabulary": "collective.blog.authors"
+    },
+    {
+      "name": "post_authors",
+      "type": "string[]",
+      "attr": "getPostAuthors",
+      "title:i18n": "Post authors",
+      "description:i18n": "Names of the authors of a post",
+      "group": "Blog",
+      "enabled": false,
+      "sortable": false
+    }
+  ],
+  "metadata": [
+    {
+      "name": "blog_uid",
+      "type": "uuid",
+      "attr": "getBlogUid"
+    },
+    {
+      "name": "blog_tags",
+      "type": "string[]",
+      "attr": "getBlogTags"
+    },
+    {
+      "name": "post_authors",
+      "type": "string[]",
+      "attr": "getPostAuthors"
+    }
+  ]
+}

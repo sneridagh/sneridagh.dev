@@ -1,0 +1,57 @@
+{
+  "id": "blog_post",
+  "title:i18n": "Blog post",
+  "description:i18n": "Adds the authors, contributors and rights of a blog post.",
+  "schema": {
+    "fieldsets": [
+      {
+        "fields": ["creators", "contributors", "rights"],
+        "id": "metadata",
+        "title:i18n": "Metadata"
+      }
+    ],
+    "properties": {
+      "creators": {
+        "title:i18n": "Authors",
+        "description:i18n": "Persons responsible for creating the content of this post. The principal creator should come first.",
+        "type": "array",
+        "uniqueItems": true,
+        "default": [],
+        "factory": "Tuple",
+        "items": {
+          "title": "",
+          "description": "",
+          "type": "string",
+          "factory": "Choice",
+          "vocabulary": {
+            "@id": "collective.blog.authors"
+          }
+        }
+      },
+      "contributors": {
+        "title:i18n": "Contributors",
+        "description:i18n": "The names of people that have contributed to this item.",
+        "type": "array",
+        "uniqueItems": true,
+        "default": [],
+        "factory": "Tuple",
+        "items": {
+          "title": "",
+          "description": "",
+          "type": "string",
+          "factory": "Choice",
+          "vocabulary": {
+            "@id": "users"
+          }
+        }
+      },
+      "rights": {
+        "title:i18n": "Rights",
+        "description:i18n": "Copyright statement or other rights information on this item.",
+        "type": "string",
+        "widget": "textarea",
+        "factory": "Text"
+      }
+    }
+  }
+}

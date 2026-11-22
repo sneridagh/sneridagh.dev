@@ -1,0 +1,28 @@
+{
+  "name": "nick-blog",
+  "description": "Blog for Nick: the features of collective.blog (blog, post, author and tag types, blog indexes, vocabularies and the @authors service)",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "version": "1.0.0",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "nick": {
+    "profiles": "src/profiles"
+  },
+  "keywords": [
+    "nick",
+    "nick-addon"
+  ],
+  "engines": {
+    "node": "^22 || ^24 || ^25 || ^26"
+  },
+  "peerDependencies": {
+    "@plone/nick": "^3.1.0"
+  }
+}

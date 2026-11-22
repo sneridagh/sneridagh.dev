@@ -134,6 +134,11 @@ stack-logs-backend: ## Display backend logs
 	@echo "$(GREEN)==> Stack $(STACK_NAME): Logs for backend in context $(DEPLOY_ENV) $(RESET)"
 	${DOCKER_CMD_CONTEXT} service logs $(STACK_NAME)_backend
 
+.PHONY: stack-logs-nick
+stack-logs-nick: ## Display Nick logs
+	@echo "$(GREEN)==> Stack $(STACK_NAME): Logs for nick in context $(DEPLOY_ENV) $(RESET)"
+	${DOCKER_CMD_CONTEXT} service logs $(STACK_NAME)_nick
+
 .PHONY: stack-scale-services
 stack-scale-services: ## Scale services
 	@echo "$(GREEN)==> Stack $(STACK_NAME): Scaling Frontend and Backend to $(DEPLOY_SCALES) in context $(DEPLOY_ENV) $(RESET)"

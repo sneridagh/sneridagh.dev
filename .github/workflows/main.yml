@@ -6,9 +6,11 @@ on:
       - "backend/**"
       - "frontend/**"
       - "aurora/**"
+      - "nick/**"
       - ".github/workflows/backend.yml"
       - ".github/workflows/frontend.yml"
       - ".github/workflows/main.yml"
+      - ".github/workflows/nick.yml"
       - "devops/**"
   workflow_dispatch:
 
@@ -26,6 +28,7 @@ jobs:
       backend: ${{ steps.filter.outputs.backend }}
       frontend: ${{ steps.filter.outputs.frontend }}
       aurora: ${{ steps.filter.outputs.aurora }}
+      nick: ${{ steps.filter.outputs.nick }}
       BASE_TAG: ${{ steps.vars.outputs.BASE_TAG }}
       IMAGE_NAME_PREFIX: ${{ env.IMAGE_NAME_PREFIX }}
       NODE_VERSION: ${{ env.NODE_VERSION }}
@@ -61,6 +64,9 @@ jobs:
             aurora:
               - 'aurora/**'
               - '.github/workflows/frontend.yml'
+            nick:
+              - 'nick/**'
+              - '.github/workflows/nick.yml'
 
       - name: Test vars
         run: |
@@ -71,6 +77,7 @@ jobs:
           echo 'backend: ${{ steps.filter.outputs.backend }}'
           echo 'aurora: ${{ steps.filter.outputs.aurora }}'
           echo 'frontend: ${{ steps.filter.outputs.frontend }}'
+          echo 'nick: ${{ steps.filter.outputs.nick }}'
 
   backend:
     uses: ./.github/workflows/backend.yml
@@ -95,12 +102,25 @@ jobs:
       contents: read
       packages: write
 
+  nick:
+    uses: ./.github/workflows/nick.yml
+    needs:
+        - config
+    with:
+        base-tag: ${{ needs.config.outputs.BASE_TAG }}
+        image-name-prefix: ${{ needs.config.outputs.IMAGE_NAME_PREFIX }}
+    if: ${{ needs.config.outputs.nick == 'true' }}
+    permissions:
+      contents: read
+      packages: write
+
   deploy:
     if: ${{ always() && github.ref == 'refs/heads/main' && !contains(needs.*.result, 'failure') }}
     needs:
       - config
       - backend
       - frontend
+      - nick
     runs-on: ubuntu-latest
     environment: ${{ needs.config.outputs.ENVIRONMENT }}
     steps:

@@ -1,0 +1,30 @@
+{
+  "id": "Post",
+  "title:i18n": "Blog Post",
+  "description:i18n": "A Blog Post",
+  "global_allow": false,
+  "filter_content_types": true,
+  "allowed_content_types": [
+    "File",
+    "Image"
+  ],
+  "schema": {
+    "behaviors": [
+      "basic",
+      "categorization",
+      "dates",
+      "blocks",
+      "versioning",
+      "short_name",
+      "id_from_title",
+      "folderish",
+      "exclude_from_nav",
+      "preview_image_link",
+      "blog_post",
+      "blog_tags",
+      "blog_item"
+    ],
+    "layouts": []
+  },
+  "workflow": "simple_publication_workflow"
+}

@@ -164,6 +164,47 @@ services:
         - traefik.http.routers.rt-backend-classic.service=svc-backend
         - traefik.http.routers.rt-backend-classic.middlewares=gzip,mw-backend-auth,mw-backend-vhm-classic
 
+  nick:
+    image: ghcr.io/sneridagh/sneridagh-dev-nick:${STACK_PARAM:-latest}
+    environment:
+      PORT: "8081"
+      DB_HOST: db-nick
+      DB_NAME: nick
+      DB_USER: nick
+      DB_PASSWORD: ${NICK_DB_PASSWORD:?NICK_DB_PASSWORD is not set}
+      SECRET: ${NICK_SECRET:?NICK_SECRET is not set}
+      # Only read on the first start, when sneridagh-dev:default creates the
+      # admin user
+      NICK_ADMIN_PASSWORD: ${NICK_ADMIN_PASSWORD:-}
+      ALLOWED_ORIGINS: https://nick.sneridagh.dev
+      # Blobs in Postgres: no volume for files, one database to back up
+      BLOBS: db
+      RATE_LIMIT_STORE: postgres
+    depends_on:
+      - db-nick
+    networks:
+      - nw-internal
+      - public
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 5s
+        order: start-first
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=public
+        - traefik.constraint-label=public
+        # Service
+        - traefik.http.services.svc-nick.loadbalancer.server.port=8081
+        # Routers
+        - traefik.http.routers.rt-nick.rule=Host(`nick.sneridagh.dev`)
+        - traefik.http.routers.rt-nick.entrypoints=https
+        - traefik.http.routers.rt-nick.tls=true
+        - traefik.http.routers.rt-nick.tls.certresolver=le
+        - traefik.http.routers.rt-nick.service=svc-nick
+        - traefik.http.routers.rt-nick.middlewares=gzip
+
   db:
     image: postgres:14
     environment:
@@ -175,11 +216,28 @@ services:
     networks:
       - nw-internal
 
+  db-nick:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: nick
+      POSTGRES_PASSWORD: ${NICK_DB_PASSWORD:?NICK_DB_PASSWORD is not set}
+      POSTGRES_DB: nick
+    volumes:
+      # Postgres 18 keeps its data in a versioned folder below this path
+      - vol-nick-data:/var/lib/postgresql
+    networks:
+      - nw-internal
+
 volumes:
   vol-site-data:
     driver_opts:
       type: none
       device: /srv/sneridagh-dev/data
+      o: bind
+  vol-nick-data:
+    driver_opts:
+      type: none
+      device: /srv/sneridagh-dev/nick-data
       o: bind
 
 networks:

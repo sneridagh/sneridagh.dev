@@ -1,0 +1,20 @@
+{
+  "uuid": "edf4aab9-e5c8-4eec-851d-f7ae9f001528",
+  "type": "Site",
+  "title": "Victor Fernández de Alba personal blog",
+  "description": "A summary of my journey as developer on what, why, and how I do things and other random musings.",
+  "owner": "admin",
+  "workflow_state": "published",
+  "created": "2026-11-22T00:00:00.000Z",
+  "modified": "2026-11-22T00:00:00.000Z",
+  "effective": "2026-11-22T00:00:00.000Z",
+  "language": "en",
+  "blocks": {
+    "9f0b4e0e-6a3c-4d2b-9c51-5a1f0c8e7d21": {
+      "@type": "title"
+    }
+  },
+  "blocks_layout": {
+    "items": ["9f0b4e0e-6a3c-4d2b-9c51-5a1f0c8e7d21"]
+  }
+}
